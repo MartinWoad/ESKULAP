@@ -22,14 +22,14 @@ review).
 develop, a mastera trzymali tylko do pokazowych wersji, to już zależy tylko od nas.
 
 ## Kod Strony
-  Tu będziemy zajmować się kodem strony. Kod strony i wszystkie elementy z nim wziązane,
+  Tu będziemy zajmować się kodem strony. Kod strony i wszystkie elementy z nim związane,
 jak np. grafika przechowywane będą w folderze **_src_** i jego podfolderach.
 
 ## Dokumentacja Strony
-  Tu będziemy zajmować się dokumentacją strony. Dokumentacja strony i wszystkie elementy z nią wziązane
+  Tu będziemy zajmować się dokumentacją strony. Dokumentacja strony i wszystkie elementy z nią związane
 przechowywane będą w folderze **_docs_** i jego podfolderach.
 
 ## Testowanie Strony
-  Tu będziemy zajmować się testowaniem strony. Test case'y i wszystkie elementy z nimi wziązane
+  Tu będziemy zajmować się testowaniem strony. Test case'y i wszystkie elementy z nimi związane
 przechowywane będą w folderze **_test_** i jego podfolderach.
   
