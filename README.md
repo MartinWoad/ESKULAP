@@ -18,7 +18,7 @@ git checkout -b nazwa_nowego_brancha
 ```
 3. Kodujemy co mamy zakodzić. 
 
-4. Aby *wypchną*ć* zmiany, musimy dodać zmienione pliki do *"indeksu gita"*, stworzyć *"commita"* i go *"spushować"*
+4. Aby *wypchnąć* zmiany, musimy dodać zmienione pliki do *"indeksu gita"*, stworzyć *"commita"* i go *"spushować"*
 
 ```
 git add -A
@@ -32,7 +32,7 @@ git push
 git push --set-upstream origin nazwa_nowego_brancha
 ```
 
-6. *Eat, commit, sleep, repeat*. będąc na swoim branchu, punkty 3 i 4 możemy wykonywać wiele razy. Wtedy wypchniemy na niego kilka commitów. Zachęcam do tego, gdyż im większa liczba commitów, tym mniejsze prawdopodobieństwo *konfliktów* w *mergach*.
+6. *Eat, sleep, commit, repeat*. Będąc na swoim branchu, punkty 3 i 4 możemy wykonywać wiele razy. Wtedy wypchniemy na niego kilka commitów. Zachęcam do dzielenia kodu na mniejsze commity. Bo im większa liczba commitów, tym mniejsze prawdopodobieństwo *konfliktów* w *mergach*.
 
 
 7. Gdy już wszystko zakodzimy i wypchniemy wszystkie commity, tworzymy **Pull Requesta** i dodajemy przynajmniej dwie osoby do **code review**. Czytaj więcej: [>>KLIK<<](docs/git_poradnik.md)
