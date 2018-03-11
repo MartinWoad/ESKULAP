@@ -1,25 +1,46 @@
 # ESKULAP
 
 
-## Kontrola Wersji (zalecenia by Krzysztof Komar)
-  Trzeba ograniczyć prawdopodobieństwo wrzucania commitów, które rozwalą cały projekt.
-Każda funkcjonalność ma być robiona na osobnych branchach (tzn 1 branch = 1
-zadanie 1 osoby). Po wrzuceniu kodu i sprawdzeniu, osoba robiąca dane zadanie robi tzw. „Pull
-Request” i przypisuje do niego np. 2 inne osoby w celu wykonania przez nie „Code review”. Code
-review polega na: przejrzeniu kodu (czy nie ma tam ukrytych „bomb”, czy funkcje i zmienne
-nazywają się w miarę ok, czy kod jest napisany jak w konwencji nakazano) oraz przetestowaniu tego
-(czyli po prostu odpaleniu danej podstronki, przeklikanie czy działa i czy nie wywala całego systemu).
-Gdy wszystko jest ok, osoby robiące code review klikają w przycisk „Approve” i wtedy osoba
-odpowiedzialna za dane zadanie ma wykonać merge do głównego brancha.
-Dzięki temu na głównym branchu mamy cały czas działający projekt, bez rozwalonych kawałków
-funkcjonalności, gotowy do pokazania „klyentowi”.
-Z kolei robienie Code Review uchroni nas przed zjawiskiem „ciągle nie działającego projektu”
-(który na dłuższą metę zniechęca wszystkich) oraz inni mogliby zobaczyć co zostało już napisane,
-będzie większa wymiana wiedzy (zawsze można coś fajnego podpatrzyć podczas robienia code
-review).
-  Odnośnie samych kwestii technicznych – czy mielibyśmy tylko branch master, i wszyscy by się
-„odbranchowali” od niego i do niego mergowali, czy dodatkowo wprowadzilibyśmy drugi branch
-develop, a mastera trzymali tylko do pokazowych wersji, to już zależy tylko od nas.
+## Kontrola Wersji - czytaj więcej: [>>KLIK<<](docs/git_poradnik.md)
+Aby coś wrzucić do repo, wykonujemy kilka kroków:
+1. Sprawdzamy *status zmian*, przełączamy się na *mastera* i zaciągamy najnowsze *commity*:
+
+```
+git status -s
+git checkout master
+git pull
+```
+
+2. Tworzymy nowego *brancha*. Jeden branch = jedno zadanie jednej osoby
+
+```
+git checkout -b nazwa_nowego_brancha
+```
+3. Kodujemy co mamy zakodzić. 
+
+4. Aby *wypchnąć* zmiany, musimy dodać zmienione pliki do *"indeksu gita"*, stworzyć *"commita"* i go *"spushować"*
+
+```
+git add -A
+git commit -m "Opis wprowadznych zmian"
+git push
+```
+
+5. (opcjonalny) W przypadku, gdy jest to nowy branch, wyrzuci nam fatala. Musimy wtedy ustawić odpowiedni *"upstream"* na GitHubie dla tego brancha:
+
+```
+git push --set-upstream origin nazwa_nowego_brancha
+```
+
+6. *Eat, sleep, commit, repeat*. Będąc na swoim branchu, punkty 3 i 4 możemy wykonywać wiele razy. Wtedy wypchniemy na niego kilka commitów. Zachęcam do dzielenia kodu na mniejsze commity. Bo im większa liczba commitów, tym mniejsze prawdopodobieństwo *konfliktów* w *mergach*.
+
+
+7. Gdy już wszystko zakodzimy i wypchniemy wszystkie commity, tworzymy **Pull Requesta** i dodajemy przynajmniej dwie osoby do **code review**. Czytaj więcej: [>>KLIK<<](docs/git_poradnik.md)
+
+### GIT - Cheat sheet
+- `git status` - wyświetla zmodyfikowane pliki oraz aktualny branch
+- `git branch` - wyświetla aktualny branch i inne branche 
+
 
 ## Kod Strony
   Tu będziemy zajmować się kodem strony. Kod strony i wszystkie elementy z nim związane,
