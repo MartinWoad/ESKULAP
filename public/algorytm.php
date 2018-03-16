@@ -1,5 +1,30 @@
 <?php
 /**
+ * createImage()	- Tworzy nowy obraz z pliku
+ * @param string	$filename nazwa pliku
+ * 
+ * @return zwraca obraz lub w przypadu niepowodzenia false;
+ */
+function createImage($filename){
+		switch (exif_imagetype($filename)) {
+			case IMAGETYPE_GIF:
+				return imagecreatefromgif($filename);
+				break;
+			case IMAGETYPE_JPEG:
+				return imagecreatefromjpeg($filename);
+				break;
+			case IMAGETYPE_PNG:
+				return imagecreatefrompng($filename);
+				break;
+			case IMAGETYPE_BMP:
+				return imagecreatefrombmp($filename);
+				break;
+			default:
+				exit("Unsupported file type ($filename)");
+	}
+}
+
+/**
  * colorize()	- funkcja do kolorowania zdjęć
  * @param string	$filename		nazwa pliku do pokolorowania
  * @param string	$to				nazwa pliku pokolorowanego
@@ -14,61 +39,37 @@ function colorize($filename, $to, $paletteName){
 		exit("Palette doesn't exist ($paletteName)");
 	}
 	
-	switch (exif_imagetype($filename)) {
-		case IMAGETYPE_GIF:
-			$image = imagecreatefromgif($filename);
-			break;
-		case IMAGETYPE_JPEG:
-			$image = imagecreatefromjpeg($filename);
-			break;
-		case IMAGETYPE_PNG:
-			$image = imagecreatefrompng($filename);
-			break;
-		case IMAGETYPE_BMP:
-			$image = imagecreatefrombmp($filename);
-			break;
-		default:
-			exit("Unsupported file type ($filename)");
+	if(!($image = createImage($filename))){
+		exit("Sorry, we can not load this picture ($filename)");
 	}
 	
-	switch (exif_imagetype($paletteName)) {
-		case IMAGETYPE_GIF:
-			$palette = imagecreatefromgif($paletteName);
-			break;
-		case IMAGETYPE_JPEG:
-			$palette = imagecreatefromjpeg($paletteName);
-			break;
-		case IMAGETYPE_PNG:
-			$palette = imagecreatefrompng($paletteName);
-			break;
-		case IMAGETYPE_BMP:
-			$palette = imagecreatefrombmp($paletteName);
-			break;
-		default:
-			exit("Unsupported color palette file format ($paletteName)");
+	if(!($palette = createImage($paletteName))){
+		exit("Sorry, we can not load color palette ($paletteName)");
 	}
 	
-    $size   = getimagesize($filename);
-    $sizeCs = getimagesize($paletteName);
+    $size = getimagesize($filename);
+    $sizePalette = getimagesize($paletteName);
     
 	$width  = $size[0];
     $height = $size[1];
 	
-	$widthCs  = $sizeCs[0];
-    $heightCs = $sizeCs[1];
+	$widthPalette  = $sizePalette[0];
+    $heightPalette = $sizePalette[1];
 	
 	// TODO: maxsixe do zapytania na zajeciach
 	if($width <= 0 || $height <= 0){
 		exit("Image is incorrect size ($filename)");
 	}
 	
+	$minWidthPalette = 255;
+	
 	// TODO: maxsixe do zapytania na zajeciach
-	if($widthCs <= 0 || $heightCs <= 0){
+	if($widthPalette <= $minWidthPalette || $heightPalette <= 0){
 		exit("Palette is incorrect size ($paletteName)");
 	}
 	
 	$colorMax = 255;
-	$factor = $widthCs / $colorMax;
+	$factor = $widthPalette / $colorMax;
 	
     for($x=0;$x<$width;$x++)
     {
@@ -79,21 +80,19 @@ function colorize($filename, $to, $paletteName){
             $g = ($rgb >> 8) & 0xFF;
             $b = ($rgb >> 0) & 0xFF;
 			
-			if($r != $g && $r != $b)
-			{
+			if($r != $g && $r != $b) {
 				exit("The picture is not black and white ($filename)");
 			}
 			
 			$newColor = intval($r * $factor);
 			
-			if($newColor >= $widthCs)
-			{
-			 	$newColor = $widthCs-1;
+			if($newColor >= $widthPalette) {
+			 	$newColor = $widthPalette - 1;
 			}
 			
-            $rgbCs = imagecolorat($palette, $newColor , 0);	
+            $rgbPalette = imagecolorat($palette, $newColor , 0);	
 			
-			imagesetpixel($image, $x, $y, $rgbCs);	
+			imagesetpixel($image, $x, $y, $rgbPalette);	
         }
     }
 	
@@ -129,10 +128,9 @@ function generateNewFilename($orginalFilename, $extension){
 	return $firstPart . "_co_" . date("dmY_G.i_") . substr(md5(rand()), 0, 7) . "." . end($exploded);;
 }
 	// Ustawianie zmiennych
-	$orginalFilename = 'pictures/images2.jpg';
+	$orginalFilename = 'pictures/test.png';
 	$newFilename = generateNewFilename($orginalFilename, '.bmp');
 	$paletteFilename = 'palettes/palette.png';
 
 	// Kolorowanie zdjęcia
 	colorize($orginalFilename, $newFilename, $paletteFilename);
-?>
