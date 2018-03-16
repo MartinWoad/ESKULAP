@@ -21,8 +21,9 @@
 
 	<!-- FontAwesome (źródło zamiast pliku, bo i tak ikony są hostowane u nich) -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="{{ URL::to('css/admin.css') }}">
 
-	<?php
+<?php
 		require app_path().'/helpers.php';
 	?>
 
@@ -53,9 +54,10 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" >
-				Eskulap - Panel zarządzania <small> ({{ $profil->funkcja }}) </small>
-			</a>
+			<img src="img/logo-admin.png" class="logo"></img>
+			<p class="navbar-brand" >
+				Panel zarządzania <small> ({{ $profil->funkcja }}) </small>
+			</p>
 
 		</div>
 
@@ -74,7 +76,7 @@
 		</div>
 	</nav>
 	<div class="container-fluid main-container">
-		<div class="col-md-2 sidebar">
+		<div class="col-sm-4 col-md-2 sidebar">
 			<ul class="nav nav-pills nav-stacked">
 				<li class="{{ set_active(['dashboard']) }}"><a href="dashboard">Strona główna</a></li>
 				<li class="{{ set_active(['listapacjentow']) }}"><a href="listapacjentow">Lista pacjentów</a></li>

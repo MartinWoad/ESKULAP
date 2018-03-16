@@ -36,3 +36,14 @@
 .form-control {
     font-family: FontAwesome, Arial;
 }
+
+.error {
+    position: absolute;
+    left: 0;
+    top: 0;
+    right:0;
+    width: 96%;
+    margin: 2%;
+    margin-top: 10px;
+    z-index: 1;
+}

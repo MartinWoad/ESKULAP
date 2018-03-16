@@ -49,7 +49,8 @@ Rejestracja
 		    <?php
 		    	// Wyświetlanie błędów
 				$error = session()->get('error');
-				echo $error;
+				if ($error != '')
+              echo '<div class="alert alert-danger alert-dismissible fade in error"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$error.'</div>';
 			?>
 		  <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
 		    <div class="form-group">
@@ -81,7 +82,7 @@ Rejestracja
 		        <p class="help-block">Wprowadź imię</p>
 		      </div>
 		    </div>
-		    <div class="control-group">
+		    <div class="form-group">
 		      <label class="control-label" for="surname">Nazwisko</label>
 		      <div class="controls">
 		        <input type="text" name="surname" id="surname" placeholder="" class="form-control">

@@ -8,7 +8,11 @@ Logowanie
 @endsection
 @section('content')
 
-
+    <?php
+    $message = session()->get('message');
+    if ($message != '')
+        echo '<div class="alert alert-danger alert-dismissible fade in error"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$message.'</div>';
+    ?>
 
 <div class="container logo">
     <div class="col-sm-12">
@@ -22,11 +26,6 @@ Logowanie
                 <h3 class="panel-title">Logowanie</h3>
             </div>
             <div class="panel-body">
-                <?php
-                $message = session()->get('message');
-                echo $message;
-
-                ?>
                 <form role="form" method="POST">
                     <fieldset>
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
