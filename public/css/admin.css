@@ -1,0 +1,22 @@
+.navbar {
+    width:100%;
+    text-align: center;
+    border-bottom: 1px solid #79a2ff78;
+}
+
+
+.navbar p, .dropdown-toggle {
+    margin: 0;
+}
+
+.logo {
+    max-width:130px;
+    float: left;
+    margin-top:7px;
+    margin-left: 30px;
+    margin-right: 30px;
+}
+
+.navbar-brand{
+    color:#337ab7 !important;
+}
