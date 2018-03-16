@@ -9,16 +9,12 @@ function createImage($filename){
 		switch (exif_imagetype($filename)) {
 			case IMAGETYPE_GIF:
 				return imagecreatefromgif($filename);
-				break;
 			case IMAGETYPE_JPEG:
 				return imagecreatefromjpeg($filename);
-				break;
 			case IMAGETYPE_PNG:
 				return imagecreatefrompng($filename);
-				break;
 			case IMAGETYPE_BMP:
 				return imagecreatefrombmp($filename);
-				break;
 			default:
 				exit("Unsupported file type ($filename)");
 	}
