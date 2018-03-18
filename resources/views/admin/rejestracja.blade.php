@@ -68,7 +68,7 @@
               <div class="form-group">
                 <label class="control-label" for="dateOfBirth">Data urodzenia</label>
                 <div class="controls">
-                  <input type="date" name="dateOfBirth" placeholder="" class="form-control">
+                  <input type="date" name="dateOfBirth" placeholder="" class="form-control" id="dateOfBirth">
                   <p class="help-block">Wprowadź datę urodzenia</p>
                 </div>
               </div>
@@ -89,7 +89,7 @@
               <div class="form-group" id="gdyPacjent2">
                 <label class="control-label" for="username">Login</label>
                 <div class="controls">
-                  <input type="text" name="username" placeholder="" class="form-control">
+                  <input type="text" name="username" placeholder="" class="form-control" id="login">
                   <p class="help-block">Wprowadź login (bez spacji)</p>
                 </div>
               </div>
@@ -174,10 +174,27 @@
       toggleInvalidInput('#password', password.length >= 4);
     });
 
+    $('#login').change(function () {
+      const password = $('#login').val();
+      toggleInvalidInput('#password', password.length >= 4);
+    });
+
     $('#password, #password_confirm').change(function () {
       const password = $('#password').val();
       const passwordConfirm = $('#password_confirm').val();
       toggleInvalidInput('#password_confirm', password === passwordConfirm);
+    });
+
+    $('#pesel, #dateOfBirth').change(function () {
+      const pesel = $('#pesel').val();
+      const dateOfBirth = $('#dateOfBirth').val();
+
+      const isDay = pesel.substring(4, 6) === dateOfBirth.substring(8, 10);
+      const isMonth = parseInt(pesel.substring(2, 4)) % 20 === parseInt(dateOfBirth.substring(5, 7));
+      const isYear = pesel.substring(0, 2) === dateOfBirth.substring(2, 4);
+      const condition = isDay && isMonth && isYear;
+      toggleInvalidInput('#dateOfBirth', condition);
+      toggleInvalidInput('#pesel', condition);
     });
 
 
