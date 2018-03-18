@@ -26,17 +26,7 @@
 @endsection
 
 @section('content')
-
-    <?php
-    $sesja = session()->get('admin');
-
-    if ($sesja != "true") {
-        header("Location: " . URL::to('/'));
-        die();
-    }
-    ?>
-
-    <div class="col-sx-12 col-sm-8 col-md-10">
+      <div class="col-sx-12 col-sm-8 col-md-10">
       <div class="panel panel-default">
         <div class="panel-heading">
           Rejestracja nowego profilu

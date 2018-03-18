@@ -32,6 +32,13 @@ Route::get('/admin', function () {
 
 Route::get('/rejestracja', function () {
 	$lekarze = DB::table('users')->where('funkcja', 'lekarz')->get();
+
+	$is_admin = session()->get('admin') === 'true';
+    if (!$is_admin) {
+        header("Location: " . URL::to('/'));
+        die();
+    }
+
     return view('admin.rejestracja', compact('lekarze'));
 });
 
