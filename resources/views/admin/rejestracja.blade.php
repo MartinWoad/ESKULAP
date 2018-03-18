@@ -4,8 +4,6 @@
   Rejestracja
 @endsection
 
-
-
 @section('content')
   <div class="col-sx-12 col-sm-8 col-md-10 registration">
     <div class="panel panel-default">
