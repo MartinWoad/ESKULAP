@@ -46,14 +46,14 @@
               <div class="form-group">
                 <label class="control-label" for="forename">Imię</label>
                 <div class="controls">
-                  <input type="text" name="forename" id="forename" placeholder="" class="form-control" onchange="checkName(this)">
+                  <input type="text" name="forename" id="forename" placeholder="" class="form-control">
                   <p class="help-block">Wprowadź imię</p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="surname">Nazwisko</label>
                 <div class="controls">
-                  <input type="text" name="surname" id="surname" placeholder="" class="form-control" onchange="checkName(this)">
+                  <input type="text" name="surname" id="surname" placeholder="" class="form-control">
                   <p class="help-block">Wprowadź nazwisko</p>
                 </div>
               </div>
@@ -75,7 +75,7 @@
               <div class="form-group">
                 <label class="control-label" for="pesel">PESEL</label>
                 <div class="controls">
-                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control" onchange="checkPesel(this)">
+                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control">
                   <p class="help-block">Wprowadź numer PESEL</p>
                 </div>
               </div>
@@ -96,7 +96,7 @@
               <div class="form-group" id="gdyPacjent3">
                 <label class="control-label" for="password">Hasło</label>
                 <div class="controls">
-                  <input type="password" id="password" name="password" placeholder="" class="form-control" onchange="checkPassword()">
+                  <input type="password" id="password" name="password" placeholder="" class="form-control">
                   <p class="help-block">Hasło powinno się składać z co najmniej 4 znaków</p>
                 </div>
               </div>
@@ -105,7 +105,7 @@
                 <label class="control-label" for="password_confirm">Potwierdź hasło</label>
                 <div class="controls">
                   <input type="password" id="password_confirm" name="password_confirm" placeholder=""
-                         class="form-control" onchange="checkPassword()">
+                         class="form-control">
                   <p class="help-block">Wprowadzone hasła muszą być identyczne</p>
                 </div>
               </div>
@@ -143,44 +143,54 @@
       }
     }
 
-    function checkName(input) {
-      const name = input.value;
+    $('#forename').change(function () {
+      const name = $('#forename').val();
       const regex = /^[a-zA-Z]+$/;
-      toggleInvalidInput(input, regex.test(name));
-    }
+      toggleInvalidInput('#forename', regex.test(name));
+    });
 
-    function checkPesel(input) {
-      const pesel = input.value;
+    $('#surname').change(function () {
+      const name = $('#surname').val();
+      const regex = /^[a-zA-Z]+$/;
+      toggleInvalidInput('#surname', regex.test(name));
+    });
+
+    $('#pesel').change(function () {
+      const pesel = $('#pesel').val();
       const regex = /^[0-9]{11}$/.test(pesel);
 
-      const isBadDate = (parseInt(pesel.substring(4, 6)) > 31) || (parseInt(pesel.substring(2, 4)) > 12);
+      const isBadDate = (parseInt(pesel.substring(4, 6)) > 31) || (parseInt(pesel.substring(2, 4)) % 20) > 12;
       let checksum = (parseInt(pesel[0]) + 3 * parseInt(pesel[1]) + 7 * parseInt(pesel[2]) + 9 * parseInt(pesel[3]) + parseInt(pesel[4]) + 3 * parseInt(pesel[5]) + 7 * parseInt(pesel[6]) + 9 * parseInt(pesel[7]) + parseInt(pesel[8]) + 3 * parseInt(pesel[9])) % 10;
       if (checksum === 0) {
         checksum = 10;
       }
       checksum = 10 - checksum;
       const condition = parseInt(pesel[10]) === checksum && !isBadDate && regex;
-      toggleInvalidInput(input, condition);
-    }
+      toggleInvalidInput('#pesel', condition);
+    });
 
-    function checkPassword() {
-      const passwordInput = document.getElementById('password');
-      const passwordConfirmInput = document.getElementById('password_confirm');
-      toggleInvalidInput(passwordInput, passwordInput.value.length >= 4);
-      console.log(passwordInput.value.length);
-      toggleInvalidInput(passwordConfirmInput, passwordInput.value === passwordConfirmInput.value);
-    }
+    $('#password').change(function () {
+      const password = $('#password').val();
+      toggleInvalidInput('#password', password.length >= 4);
+    });
+
+    $('#password, #password_confirm').change(function () {
+      const password = $('#password').val();
+      const passwordConfirm = $('#password_confirm').val();
+      toggleInvalidInput('#password_confirm', password === passwordConfirm);
+    });
+
 
     /**
      * Append invalid-input class and disable send button, when condition is false.
      * Remove that restrictions, when passed condition is true
      *
-     * @param input - input element
+     * @param input - input id name
      * @param condition - true, when everything is ok, else otherwise
      */
     function toggleInvalidInput(input, condition) {
-      document.getElementById('send_button').disabled = !condition;
-      condition ? input.classList.remove('invalid-input') : input.classList.add('invalid-input');
+      condition ? $(input).removeClass('invalid-input') : $(input).addClass('invalid-input');
+      $('#send_button').attr('disabled', !condition);
     }
   </script>
 @endsection
