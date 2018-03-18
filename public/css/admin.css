@@ -31,3 +31,24 @@
     margin-top: 10px;
     z-index: 1;
 }
+
+.registration .control-group {
+    text-align: center;
+}
+
+.registration .form-group {
+    text-align: center;
+    margin-bottom: 0;
+}
+
+.registration .form-group select {
+    margin: 0 auto;
+}
+
+.registration .container {
+    margin-bottom: 10px;
+}
+
+.registration .controls .invalid-input {
+    border: 2px solid red;
+}

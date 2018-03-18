@@ -4,31 +4,7 @@
   Rejestracja
 @endsection
 
-@section('head')
-  <style type="text/css">
-    .control-group {
-      text-align: center;
-    }
 
-    .form-group {
-      text-align: center;
-      margin-bottom: 0px;
-    }
-
-    .form-group select {
-      margin: 0 auto;
-    }
-
-    .container {
-      margin-bottom: 10px;
-    }
-
-    .registration .controls .invalid-input{
-      border: 2px solid red;
-    }
-
-  </style>
-@endsection
 
 @section('content')
   <div class="col-sx-12 col-sm-8 col-md-10 registration">
