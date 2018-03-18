@@ -5,7 +5,10 @@
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 	
 	
-	<title>@yield('title')</title>
+	<title>ESKULAP - @yield('title')</title>
+
+	<!-- favicon -->
+	<link rel="shortcut icon" href="{{ URL::to('favicon.ico') }}">
 
     <!-- jQuery -->
 	<script src="{{ URL::to('js/jquery-1.12.4.js') }}"></script>
@@ -15,8 +18,12 @@
 
 	<!-- Bootstrap js -->
 	<script src="{{ URL::to('js/bootstrap.min.js ')}}"></script>
-	
 
+	<!-- FontAwesome (źródło zamiast pliku, bo i tak ikony są hostowane u nich) -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	
+	<!-- CSS -->
+	<link rel="stylesheet" href="{{ URL::to('css/admin.css') }}">
 	<?php
 		require app_path().'/helpers.php';
 	?>
@@ -45,9 +52,10 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="navbar-brand" >
-				Eskulap - Panel administratora
-			</a>
+			<img src="img/logo-admin.png" class="logo"></img>
+			<p class="navbar-brand" >
+				Panel administratora
+			</p>
 
 		</div>
 
@@ -66,7 +74,7 @@
 		</div>
 	</nav>
 	<div class="container-fluid main-container">
-		<div class="col-md-2 sidebar">
+		<div class="col-sm-4 col-md-2 sidebar">
 			<ul class="nav nav-pills nav-stacked">
 				<li class="{{ set_active(['admin']) }}"><a href="admin">Strona główna</a></li>
 				<li class="{{ set_active(['rejestracja']) }}"><a href="rejestracja">Stwórz profil</a></li>
