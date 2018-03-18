@@ -137,7 +137,7 @@
               </div>
               <div class="form-group">
                 <div class="controls">
-                  <button class="btn btn-success">Zarejestruj</button>
+                  <button class="btn btn-success" id="send_button">Zarejestruj</button>
                 </div>
               </div>
             </div>
@@ -197,7 +197,15 @@
       toggleInvalidInput(passwordConfirmInput, passwordInput.value === passwordConfirmInput.value);
     }
 
+    /**
+     * Append invalid-input class and disable send button, when condition is false.
+     * Remove that restrictions, when passed condition is true
+     *
+     * @param input - input element
+     * @param condition - true, when everything is ok, else otherwise
+     */
     function toggleInvalidInput(input, condition) {
+      document.getElementById('send_button').disabled = !condition;
       condition ? input.classList.remove('invalid-input') : input.classList.add('invalid-input');
     }
   </script>
