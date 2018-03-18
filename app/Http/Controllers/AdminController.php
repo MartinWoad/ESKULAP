@@ -20,7 +20,7 @@ class AdminController extends Controller
         $is_admin = session()->get(User::ADMIN) === 'true';
         if (!$is_admin) {
             header("Location: " . URL::to('/'));
-            die();
+            return;
         }
 
         return view('admin.rejestracja', compact('lekarze'));
