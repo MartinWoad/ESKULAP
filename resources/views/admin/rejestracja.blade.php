@@ -22,11 +22,16 @@
     .container {
       margin-bottom: 10px;
     }
+
+    .registration .controls .invalid-input{
+      border: 2px solid red;
+    }
+
   </style>
 @endsection
 
 @section('content')
-  <div class="col-sx-12 col-sm-8 col-md-10">
+  <div class="col-sx-12 col-sm-8 col-md-10 registration">
     <div class="panel panel-default">
       <div class="panel-heading">
         Rejestracja nowego profilu
@@ -67,14 +72,14 @@
               <div class="form-group">
                 <label class="control-label" for="forename">Imię</label>
                 <div class="controls">
-                  <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                  <input type="text" name="forename" id="forename" placeholder="" class="form-control" onchange="checkName(this)">
                   <p class="help-block">Wprowadź imię</p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="surname">Nazwisko</label>
                 <div class="controls">
-                  <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                  <input type="text" name="surname" id="surname" placeholder="" class="form-control" onchange="checkName(this)">
                   <p class="help-block">Wprowadź nazwisko</p>
                 </div>
               </div>
@@ -96,7 +101,7 @@
               <div class="form-group">
                 <label class="control-label" for="pesel">PESEL</label>
                 <div class="controls">
-                  <input type="text" name="pesel" placeholder="" class="form-control">
+                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control" onchange="checkPesel(this)">
                   <p class="help-block">Wprowadź numer PESEL</p>
                 </div>
               </div>
@@ -117,7 +122,7 @@
               <div class="form-group" id="gdyPacjent3">
                 <label class="control-label" for="password">Hasło</label>
                 <div class="controls">
-                  <input type="password" id="password" name="password" placeholder="" class="form-control">
+                  <input type="password" id="password" name="password" placeholder="" class="form-control" onchange="checkPassword()">
                   <p class="help-block">Hasło powinno się składać z co najmniej 4 znaków</p>
                 </div>
               </div>
@@ -126,7 +131,7 @@
                 <label class="control-label" for="password_confirm">Potwierdź hasło</label>
                 <div class="controls">
                   <input type="password" id="password_confirm" name="password_confirm" placeholder=""
-                         class="form-control">
+                         class="form-control" onchange="checkPassword()">
                   <p class="help-block">Wprowadzone hasła muszą być identyczne</p>
                 </div>
               </div>
@@ -164,5 +169,36 @@
       }
     }
 
+    function checkName(input) {
+      const name = input.value;
+      const regex = /^[a-zA-Z]+$/;
+      toggleInvalidInput(input, regex.test(name));
+    }
+
+    function checkPesel(input) {
+      const pesel = input.value;
+      const regex = /^[0-9]{11}$/.test(pesel);
+
+      const isBadDate = (parseInt(pesel.substring(4, 6)) > 31) || (parseInt(pesel.substring(2, 4)) > 12);
+      let checksum = (parseInt(pesel[0]) + 3 * parseInt(pesel[1]) + 7 * parseInt(pesel[2]) + 9 * parseInt(pesel[3]) + parseInt(pesel[4]) + 3 * parseInt(pesel[5]) + 7 * parseInt(pesel[6]) + 9 * parseInt(pesel[7]) + parseInt(pesel[8]) + 3 * parseInt(pesel[9])) % 10;
+      if (checksum === 0) {
+        checksum = 10;
+      }
+      checksum = 10 - checksum;
+      const condition = parseInt(pesel[10]) === checksum && !isBadDate && regex;
+      toggleInvalidInput(input, condition);
+    }
+
+    function checkPassword() {
+      const passwordInput = document.getElementById('password');
+      const passwordConfirmInput = document.getElementById('password_confirm');
+      toggleInvalidInput(passwordInput, passwordInput.value.length >= 4);
+      console.log(passwordInput.value.length);
+      toggleInvalidInput(passwordConfirmInput, passwordInput.value === passwordConfirmInput.value);
+    }
+
+    function toggleInvalidInput(input, condition) {
+      condition ? input.classList.remove('invalid-input') : input.classList.add('invalid-input');
+    }
   </script>
 @endsection
