@@ -59,7 +59,7 @@
               </div>
               <div class="form-group" id="gdyPacjent1" style="display: none;">
                 <label for="gender">Płeć</label>
-                <select class="form-control" name="gender" id="gender">
+                <select class="form-control-noborder" name="gender" id="gender">
                   <option value="Kobieta">Kobieta</option>
                   <option value="Mężczyzna">Mężczyzna</option>
                 </select>
