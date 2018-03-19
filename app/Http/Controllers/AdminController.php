@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 
 use DOMDocument;
@@ -11,6 +12,19 @@ use DB;
 
 class AdminController extends Controller
 {
+
+    public function formularzRejestracji()
+    {
+        $lekarze = User::where('funkcja', User::LEKARZ)->get();
+
+        $is_admin = session()->get(User::ADMIN) === 'true';
+        if (!$is_admin) {
+            header("Location: " . URL::to('/'));
+            return;
+        }
+
+        return view('admin.rejestracja', compact('lekarze'));
+    }
 
 	public function zarejestruj( Request $request )
 	{

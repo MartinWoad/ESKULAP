@@ -30,11 +30,7 @@ Route::get('/admin', function () {
     return view('admin.main');
 });
 
-Route::get('/rejestracja', function () {
-	$lekarze = DB::table('users')->where('funkcja', 'lekarz')->get();
-    return view('admin.rejestracja', compact('lekarze'));
-});
-
+Route::get('/rejestracja', 'AdminController@formularzRejestracji');
 Route::post('/rejestracja', 'AdminController@zarejestruj');
 
 Route::get('/listapracownikow', function(){
