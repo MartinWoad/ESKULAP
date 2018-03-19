@@ -23,7 +23,7 @@
             <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
               <div class="form-group">
                 <label for="funkcja">Funkcja</label>
-                <select class="form-control" name="funkcja" id="funkcja" onchange="yesnoCheck(this);">
+                <select class="form-control-noborder" name="funkcja" id="funkcja" onchange="yesnoCheck(this);">
                   <option value="lekarz">Lekarz</option>
                   <option value="ordynator">Ordynator</option>
                   <option value="pacjent">Pacjent</option>
@@ -32,7 +32,7 @@
               </div>
               <div class="form-group" id="gdyPacjent" style="display: none;">
                 <label for="patientsDoctor">Lekarz</label>
-                <select class="form-control" name="patientsDoctor" id="patientsDoctor">
+                <select class="form-control-noborder" name="patientsDoctor" id="patientsDoctor">
                   @if(sizeof($lekarze) == 0)
                     <option value="none">Brak lekarzy</option>
                   @endif
@@ -46,14 +46,14 @@
               <div class="form-group">
                 <label class="control-label" for="forename">Imię</label>
                 <div class="controls">
-                  <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                  <input type="text" name="forename" id="forename" placeholder="" class="form-control-noborder">
                   <p class="help-block">Wprowadź imię</p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="surname">Nazwisko</label>
                 <div class="controls">
-                  <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                  <input type="text" name="surname" id="surname" placeholder="" class="form-control-noborder">
                   <p class="help-block">Wprowadź nazwisko</p>
                 </div>
               </div>
@@ -68,14 +68,14 @@
               <div class="form-group">
                 <label class="control-label" for="dateOfBirth">Data urodzenia</label>
                 <div class="controls">
-                  <input type="date" name="dateOfBirth" placeholder="" class="form-control" id="dateOfBirth">
+                  <input type="date" name="dateOfBirth" placeholder="" class="form-control-noborder" id="dateOfBirth">
                   <p class="help-block">Wprowadź datę urodzenia</p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="pesel">PESEL</label>
                 <div class="controls">
-                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control">
+                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control-noborder">
                   <p class="help-block">Wprowadź numer PESEL</p>
                 </div>
               </div>
@@ -89,14 +89,14 @@
               <div class="form-group" id="gdyPacjent2">
                 <label class="control-label" for="username">Login</label>
                 <div class="controls">
-                  <input type="text" name="username" placeholder="" class="form-control" id="login">
+                  <input type="text" name="username" placeholder="" class="form-control-noborder" id="login">
                   <p class="help-block">Wprowadź login (bez spacji)</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent3">
                 <label class="control-label" for="password">Hasło</label>
                 <div class="controls">
-                  <input type="password" id="password" name="password" placeholder="" class="form-control">
+                  <input type="password" id="password" name="password" placeholder="" class="form-control-noborder">
                   <p class="help-block">Hasło powinno się składać z co najmniej 4 znaków</p>
                 </div>
               </div>
@@ -105,7 +105,7 @@
                 <label class="control-label" for="password_confirm">Potwierdź hasło</label>
                 <div class="controls">
                   <input type="password" id="password_confirm" name="password_confirm" placeholder=""
-                         class="form-control">
+                         class="form-control-noborder">
                   <p class="help-block">Wprowadzone hasła muszą być identyczne</p>
                 </div>
               </div>

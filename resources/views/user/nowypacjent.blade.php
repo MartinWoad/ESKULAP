@@ -47,6 +47,7 @@ Rejestracja
               <?php
                   // Wyświetlanie błędów
                   $error = session()->get('error');
+                  if ($error != "")
                 echo '<div class="alert alert-danger alert-dismissible fade in error"><a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>'.$error.'</div>';
 
                 ?>
@@ -55,20 +56,20 @@ Rejestracja
                     <div class="form-group">
                         <label class="control-label"  for="forename">Imię</label>
                         <div class="controls">
-                            <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                            <input type="text" name="forename" id="forename" placeholder="" class="form-control-noborder">
                             <p class="help-block">Wprowadź imię</p>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="control-label" for="surname">Nazwisko</label>
                         <div class="controls">
-                            <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                            <input type="text" name="surname" id="surname" placeholder="" class="form-control-noborder">
                             <p class="help-block">Wprowadź nazwisko</p>
                         </div>
                     </div>
               <div class="form-group">
                   <label for="gender">Płeć</label>
-                  <select class="form-control" name="gender" id="gender">
+                  <select class="form-control-noborder" name="gender" id="gender">
                       <option value="Kobieta">Kobieta</option>
                       <option value="Mężczyzna">Mężczyzna</option>
                   </select>
@@ -77,14 +78,14 @@ Rejestracja
                 <div class="form-group">
                     <label class="control-label"  for="dateOfBirth">Data urodzenia</label>
                     <div class="controls">
-                        <input type="date" name="dateOfBirth" placeholder="" class="form-control">
+                        <input type="date" name="dateOfBirth" placeholder="" class="form-control-noborder">
                         <p class="help-block">Wprowadź datę urodzenia</p>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="control-label"  for="pesel">PESEL</label>
                     <div class="controls">
-                        <input type="text" name="pesel" placeholder="" class="form-control">
+                        <input type="text" name="pesel" placeholder="" class="form-control-noborder">
                         <p class="help-block">Wprowadź numer PESEL</p>
                     </div>
                 </div>

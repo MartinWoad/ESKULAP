@@ -19,7 +19,7 @@ Zarządzanie
         <div class="col-md-10 content">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Pacjenci
+                    Pracownicy
                 </div>
                 <div class="panel-body">
                     @if(sizeof($pracownicy) != 0)
