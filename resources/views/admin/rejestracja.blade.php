@@ -46,14 +46,14 @@
               <div class="form-group">
                 <label class="control-label" for="forename">Imię</label>
                 <div class="controls">
-                  <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                  <input type="text" name="forename" id="forename" placeholder="" class="form-control" maxlength="10">
                   <p class="help-block">Wprowadź imię</p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="surname">Nazwisko</label>
                 <div class="controls">
-                  <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                  <input type="text" name="surname" id="surname" placeholder="" class="form-control" maxlength="10">
                   <p class="help-block">Wprowadź nazwisko</p>
                 </div>
               </div>
@@ -76,7 +76,7 @@
                 <label class="control-label" for="pesel">PESEL</label>
                 <div class="controls">
                   <input type="text" name="pesel" placeholder="" id="pesel" class="form-control">
-                  <p class="help-block">Wprowadź numer PESEL</p>
+                  <p class="help-block" maxlength="11">Wprowadź numer PESEL</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent5" style="display: none;">
@@ -89,14 +89,14 @@
               <div class="form-group" id="gdyPacjent2">
                 <label class="control-label" for="username">Login</label>
                 <div class="controls">
-                  <input type="text" name="username" placeholder="" class="form-control" id="login">
+                  <input type="text" name="username" placeholder="" class="form-control" id="login" maxlength="10">
                   <p class="help-block">Wprowadź login (bez spacji)</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent3">
                 <label class="control-label" for="password">Hasło</label>
                 <div class="controls">
-                  <input type="password" id="password" name="password" placeholder="" class="form-control">
+                  <input type="password" id="password" name="password" placeholder="" class="form-control" maxlength="10">
                   <p class="help-block">Hasło powinno się składać z co najmniej 4 znaków</p>
                 </div>
               </div>
@@ -105,7 +105,7 @@
                 <label class="control-label" for="password_confirm">Potwierdź hasło</label>
                 <div class="controls">
                   <input type="password" id="password_confirm" name="password_confirm" placeholder=""
-                         class="form-control">
+                         class="form-control" maxlength="10">
                   <p class="help-block">Wprowadzone hasła muszą być identyczne</p>
                 </div>
               </div>
