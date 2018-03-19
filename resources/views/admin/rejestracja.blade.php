@@ -75,8 +75,8 @@
               <div class="form-group">
                 <label class="control-label" for="pesel">PESEL</label>
                 <div class="controls">
-                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control">
-                  <p class="help-block" maxlength="11">Wprowadź numer PESEL</p>
+                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control" maxlength="11">
+                  <p class="help-block">Wprowadź numer PESEL</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent5" style="display: none;">
