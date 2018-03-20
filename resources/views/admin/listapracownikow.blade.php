@@ -10,6 +10,9 @@ Zarządzanie
     <!-- DataTables Plugin  -->
     <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.min.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/sum().js") }}"></script>
+    <?php
+    require_once('..\resources\views\layouts\modals.blade.php');
+    ?>
 @endsection
 
 @section('content')
@@ -44,7 +47,10 @@ Zarządzanie
                                     <td class="text-center">{{  $pracownik->data_ur }}</td>
                                     <td class="text-center">{{  $pracownik->funkcja }}</td>
                                     <td class="text-center">
-                                    <input name="delete" onclick="addItem(this);" class="btn btn-xs btn-danger" type="button" value="Usuń z bazy" />
+                                        <div class="btn-group btn-group-xs">
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editUser">Edytuj</button>
+                                            <button name="delete" class="btn btn-danger" data-toggle="modal" data-target="#deleteUser">Usuń z bazy</button>
+                                        </div>
                                     </td>
                                 </tr>
                                 @endforeach
