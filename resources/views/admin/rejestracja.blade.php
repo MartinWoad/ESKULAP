@@ -11,15 +11,24 @@
         Rejestracja nowego profilu
       </div>
       <div class="panel-body">
+        
+        @if (session()->get('error'))
+            <div class="alert alert-danger alert-dismissible fade in">
+              <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+              <strong>Ups!</strong> {{ session()->get('error') }}
+            </div>
+        @endif 
+        @if (session()->get('success'))
+          <div class="alert alert-success alert-dismissible fade in">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+            <strong>Sukces!</strong> {{ session()->get('success') }}
+          </div>
+        @endif
+
+
         <form class="form" role="form" action='' method="POST">
           <fieldset>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-            @if (session()->get('error'))
-              <div class="alert alert-danger alert-dismissible fade in error">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>{{ session()->get('error') }}
-              </div>';
-            @endif
             <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
               <div class="form-group">
                 <label for="funkcja">Funkcja</label>
@@ -46,20 +55,20 @@
               <div class="form-group">
                 <label class="control-label" for="forename">Imię</label>
                 <div class="controls">
-                  <input type="text" name="forename" id="forename" placeholder="" class="form-control-noborder">
+                  <input required pattern="[A-Za-z]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control-noborder">
                   <p class="help-block">Wprowadź imię</p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="surname">Nazwisko</label>
                 <div class="controls">
-                  <input type="text" name="surname" id="surname" placeholder="" class="form-control-noborder">
+                  <input required pattern="[A-Za-z]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control-noborder">
                   <p class="help-block">Wprowadź nazwisko</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent1" style="display: none;">
                 <label for="gender">Płeć</label>
-                <select class="form-control-noborder" name="gender" id="gender">
+                <select required class="form-control" name="gender" id="gender">
                   <option value="Kobieta">Kobieta</option>
                   <option value="Mężczyzna">Mężczyzna</option>
                 </select>
@@ -68,50 +77,50 @@
               <div class="form-group">
                 <label class="control-label" for="dateOfBirth">Data urodzenia</label>
                 <div class="controls">
-                  <input type="date" name="dateOfBirth" placeholder="" class="form-control-noborder" id="dateOfBirth">
-                  <p class="help-block">Wprowadź datę urodzenia</p>
+                  <input required type="date" min="1910-01-01" max="{{ date('Y-m-d') }}" name="dateOfBirth" placeholder="" class="form-control-noborder" id="dateOfBirth">
+                  <p class="help-block">Wprowadź datę urodzenia </p>
                 </div>
               </div>
               <div class="form-group">
                 <label class="control-label" for="pesel">PESEL</label>
                 <div class="controls">
-                  <input type="text" name="pesel" placeholder="" id="pesel" class="form-control-noborder">
+                  <input required pattern="[0-9]+" type="text" name="pesel" placeholder="" id="pesel" minlength="11" title="Proszę wprowadzić poprawny numer PESEL" maxlength="11" class="form-control-noborder">
                   <p class="help-block">Wprowadź numer PESEL</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent5" style="display: none;">
                 <label class="control-label" for="photo">Zdjęcie rentgentowskie</label>
                 <div class="controls">
-                  <input type="file" name="photo" placeholder="" class="form-control-file">
+                  <input type="file" id="photo" name="photo" placeholder="" class="form-control-file">
                   <p class="help-block">Wybierz zdjęcie rentgentowskie pacjenta</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent2">
                 <label class="control-label" for="username">Login</label>
                 <div class="controls">
-                  <input type="text" name="username" placeholder="" class="form-control-noborder" id="login">
-                  <p class="help-block">Wprowadź login (bez spacji)</p>
+                  <input required type="text" id="login" pattern="[A-Za-z0-9]+" minlength="5" maxlength="16" name="username" placeholder="" class="form-control-noborder" id="login">
+                  <p class="help-block">Wprowadź login - minimum 5 znaków (bez spacji)</p>
                 </div>
               </div>
               <div class="form-group" id="gdyPacjent3">
                 <label class="control-label" for="password">Hasło</label>
                 <div class="controls">
-                  <input type="password" id="password" name="password" placeholder="" class="form-control-noborder">
-                  <p class="help-block">Hasło powinno się składać z co najmniej 4 znaków</p>
+                  <input required  type="password" onchange="form.password_confirm.pattern = this.value;" minlength="5" maxlength="16" id="password" name="password" placeholder="" class="form-control-noborder">
+                  <p class="help-block">Hasło powinno się składać z co najmniej 5 znaków</p>
                 </div>
               </div>
 
               <div class="form-group" id="gdyPacjent4">
                 <label class="control-label" for="password_confirm">Potwierdź hasło</label>
                 <div class="controls">
-                  <input type="password" id="password_confirm" name="password_confirm" placeholder=""
+                  <input required  type="password" minlength="5" maxlength="16" id="password_confirm" name="password_confirm" placeholder=""
                          class="form-control-noborder">
                   <p class="help-block">Wprowadzone hasła muszą być identyczne</p>
                 </div>
               </div>
               <div class="form-group">
                 <div class="controls">
-                  <button class="btn btn-success" id="send_button">Zarejestruj</button>
+                  <button class="btn btn-success" onclick="test();" id="send_button">Zarejestruj</button>
                 </div>
               </div>
             </div>
@@ -124,90 +133,33 @@
 
 
   <script>
+
+
     function yesnoCheck(that) {
       if (that.value == 'pacjent') {
-        document.getElementById('gdyPacjent').style.display = 'block';
-        document.getElementById('gdyPacjent1').style.display = 'block';
-        document.getElementById('gdyPacjent2').style.display = 'none';
-        document.getElementById('gdyPacjent3').style.display = 'none';
-        document.getElementById('gdyPacjent4').style.display = 'none';
-        document.getElementById('gdyPacjent5').style.display = 'block';
-
+        $( "#gdyPacjent" ).show();
+        $( "#gdyPacjent1" ).show();
+        $( "#gdyPacjent2" ).hide();
+        $( "#gdyPacjent3" ).hide();
+        $( "#gdyPacjent4" ).hide();
+        $( "#gdyPacjent5" ).show();
+        $("#photo").prop('required',true);
+        $("#login").prop('required',false);
+        $("#password").prop('required',false);
+        $("#password_confirm").prop('required',false);
       } else {
-        document.getElementById('gdyPacjent').style.display = 'none';
-        document.getElementById('gdyPacjent1').style.display = 'none';
-        document.getElementById('gdyPacjent2').style.display = 'block';
-        document.getElementById('gdyPacjent3').style.display = 'block';
-        document.getElementById('gdyPacjent4').style.display = 'block';
-        document.getElementById('gdyPacjent5').style.display = 'none';
+        $( "#gdyPacjent" ).hide();
+        $( "#gdyPacjent1" ).hide();
+        $( "#gdyPacjent2" ).show();
+        $( "#gdyPacjent3" ).show();
+        $( "#gdyPacjent4" ).show();
+        $( "#gdyPacjent5" ).hide();
+        $("#photo").prop('required',false);
+        $("#login").prop('required',true);
+        $("#password").prop('required',true);
+        $("#password_confirm").prop('required',true);
       }
     }
 
-    $('#forename').change(function () {
-      const name = $('#forename').val();
-      const regex = /^[a-zA-Z]+$/;
-      toggleInvalidInput('#forename', regex.test(name));
-    });
-
-    $('#surname').change(function () {
-      const name = $('#surname').val();
-      const regex = /^[a-zA-Z]+$/;
-      toggleInvalidInput('#surname', regex.test(name));
-    });
-
-    $('#pesel').change(function () {
-      const pesel = $('#pesel').val();
-      const regex = /^[0-9]{11}$/.test(pesel);
-
-      const isBadDate = (parseInt(pesel.substring(4, 6)) > 31) || (parseInt(pesel.substring(2, 4)) % 20) > 12;
-      let checksum = (parseInt(pesel[0]) + 3 * parseInt(pesel[1]) + 7 * parseInt(pesel[2]) + 9 * parseInt(pesel[3]) + parseInt(pesel[4]) + 3 * parseInt(pesel[5]) + 7 * parseInt(pesel[6]) + 9 * parseInt(pesel[7]) + parseInt(pesel[8]) + 3 * parseInt(pesel[9])) % 10;
-      if (checksum === 0) {
-        checksum = 10;
-      }
-      checksum = 10 - checksum;
-      const condition = parseInt(pesel[10]) === checksum && !isBadDate && regex;
-      toggleInvalidInput('#pesel', condition);
-    });
-
-    $('#password').change(function () {
-      const password = $('#password').val();
-      toggleInvalidInput('#password', password.length >= 4);
-    });
-
-    $('#login').change(function () {
-      const password = $('#login').val();
-      toggleInvalidInput('#password', password.length >= 4);
-    });
-
-    $('#password, #password_confirm').change(function () {
-      const password = $('#password').val();
-      const passwordConfirm = $('#password_confirm').val();
-      toggleInvalidInput('#password_confirm', password === passwordConfirm);
-    });
-
-    $('#pesel, #dateOfBirth').change(function () {
-      const pesel = $('#pesel').val();
-      const dateOfBirth = $('#dateOfBirth').val();
-
-      const isDay = pesel.substring(4, 6) === dateOfBirth.substring(8, 10);
-      const isMonth = parseInt(pesel.substring(2, 4)) % 20 === parseInt(dateOfBirth.substring(5, 7));
-      const isYear = pesel.substring(0, 2) === dateOfBirth.substring(2, 4);
-      const condition = isDay && isMonth && isYear;
-      toggleInvalidInput('#dateOfBirth', condition);
-      toggleInvalidInput('#pesel', condition);
-    });
-
-
-    /**
-     * Append invalid-input class and disable send button, when condition is false.
-     * Remove that restrictions, when passed condition is true
-     *
-     * @param input - input id name
-     * @param condition - true, when everything is ok, else otherwise
-     */
-    function toggleInvalidInput(input, condition) {
-      condition ? $(input).removeClass('invalid-input') : $(input).addClass('invalid-input');
-      $('#send_button').attr('disabled', !condition);
-    }
   </script>
 @endsection

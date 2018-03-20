@@ -9,6 +9,7 @@ use DOMDocument;
 use DOMXPath;
 
 use DB;
+use URL;
 
 class AdminController extends Controller
 {
@@ -29,24 +30,100 @@ class AdminController extends Controller
 	public function zarejestruj( Request $request )
 	{
 
-		if(DB::table('users')->where('login', $request->input("username"))->first() != "")
+		function hasLetters($string)
 		{
-			return redirect()->back()->with('error', 'Wybrany login jest zajęty');
+			if (preg_match('/[A-Za-z]/', $string))
+			{
+			    return true;
+			}
+			return false;
 		}
 
-		$funkcja = $request->input('funkcja');
+		function hasNumbers($string)
+		{
+			if(1 === preg_match('~[0-9]~', $string)){
+    		return true;
+			}
+			return false;
+		}
+
+		function CheckPESEL($str)
+		{
+			if (!preg_match('/^[0-9]{11}$/',$str)) //sprawdzamy czy ciąg ma 11 cyfr
+			{
+				return false;
+			}
+		 
+			$arrSteps = array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3); // tablica z odpowiednimi wagami
+			$intSum = 0;
+			for ($i = 0; $i < 10; $i++)
+			{
+				$intSum += $arrSteps[$i] * $str[$i]; //mnożymy każdy ze znaków przez wagę i sumujemy wszystko
+			}
+			$int = 10 - $intSum % 10; //obliczamy sumć kontrolną
+			$intControlNr = ($int == 10)?0:$int;
+			if ($intControlNr == $str[10]) //sprawdzamy czy taka sama suma kontrolna jest w ciągu
+			{
+				return true;
+			}
+			return false;
+		}
+
+		if(DB::table('users')->where('login', $request->input("username"))->first() != "")
+		{
+			return redirect()->back()->with('error', 'Wybrany login jest zajęty!');
+		}
+
+		$funkcja 		= $request->input('funkcja');	
+		$imie           = $request->input('forename');
+		$nazwisko       = $request->input('surname');
+		$data_urodzenia = $request->input('dateOfBirth');
+		$pesel          = $request->input('pesel');
+
+		if(hasNumbers($imie) || hasNumbers($nazwisko) || strlen($imie) > 16 || strlen($imie) < 3 || strlen($nazwisko) > 16 || strlen($nazwisko) < 3)
+		{
+			return redirect()->back()->with('error', 'Błąd w imieniu lub nazwisku.');
+		}
+
+		$rok 	 = substr($data_urodzenia, 0, 4);
+		$miesiac = substr($data_urodzenia, 5, 2);
+		$dzien   = substr($data_urodzenia, 8, 2);
+		if(substr($data_urodzenia, 4,1) != "-" || $rok < 1910 || $rok > date("Y") || $miesiac > 12 || $dzien > 31 || $dzien < 1 || $miesiac < 1)
+		{
+			return redirect()->back()->with('error', 'Błędna data.');
+		}
+
+		//Sprawdzenie numeru PESEL
+		if(!CheckPESEL($pesel) || strlen($pesel ) != 11 || hasLetters($pesel))
+		{
+			return redirect()->back()->with('error', 'Błędny numer PESEL.');
+		}
+
+		//Porównanie PESELU z datą urodzenia
+		$dzien   = substr($pesel, 4, 2);
+		$miesiac = substr($pesel, 2, 2);
+		$rok     = substr($pesel, 0, 2);
+
+		if(substr($data_urodzenia, 8, 2) != $dzien || substr($data_urodzenia, 5, 2) != $miesiac || substr($data_urodzenia, 2, 2) != $rok)
+		{
+			return redirect()->back()->with('error', 'Wprowadzona data nie zgadza się z numerem PESEL.');
+		}
+
 		switch($funkcja)
 		{
 			case "lekarz":
 			case "ordynator":
-				$imie           = $request->input('forename');
-				$nazwisko       = $request->input('surname');
-				$data_urodzenia = $request->input('dateOfBirth');
 				$login          = $request->input('username');
 				$haslo          = $request->input('password');
-				$pesel          = $request->input('pesel');
-				$ip             = "127.0.0.1";
-				$funkcja 		= $request->input('funkcja');
+				$potw_haslo     = $request->input('password_confirm');
+
+				if(strlen($login) > 16 || strlen($login) < 5 || strlen($haslo) > 16 || strlen($haslo) < 5 || $haslo != $potw_haslo)
+				{
+					return redirect()->back()->with('error', 'Błędny login lub hasło.');
+				}
+
+				// Póki co
+				$ip = "127.0.0.1";
 
 				DB::table('users')->insert(
                 [
@@ -63,14 +140,28 @@ class AdminController extends Controller
 
 			break;
 			case "pacjent":
-				$imie           = $request->input('forename');
-				$nazwisko       = $request->input('surname');
-				$pesel          = $request->input('pesel');
 				$plec 			= $request->input('gender');
-				$data_urodzenia = $request->input('dateOfBirth');
 				$id_lekarza     = $request->input('patientsDoctor');
+				$file 			= $request->file('image');
 
-				DB::table('patients')->insert(
+				if(DB::table('users')->where('id', $id_lekarza)->where('funkcja', 'lekarz')->first() == "")
+				{
+					return redirect()->back()->with('error', 'Błędne id lekarza.');
+				}
+
+
+				if (!$request->file('image')->isValid()) {
+					return redirect()->back()->with('error', "Błąd pliku.");
+				}
+
+				if($file->getSize() > 10000000)
+				{
+					return redirect()->back()->with('error', "Wybrany plik jest zbyt duży.");
+				}
+
+				
+
+				$id = DB::table('patients')->insertGetId(
                 [
                 'imie' => $imie,
                 'nazwisko' => $nazwisko,
@@ -80,11 +171,28 @@ class AdminController extends Controller
                 'id_lekarza' => $id_lekarza
                 ]);
 
+				$destinationPath = 'pictures/original';
+ 			    $fileName = $id.$file->getClientOriginalName();
+ 			    $file->move($destinationPath,$fileName);
+
+ 			    DB::table('photos')->insert(
+ 			    [
+ 			    	'directory' => $destinationPath."/".$fileName,
+ 			    	'oryginal'  => true,
+ 			    	'id_pacjenta' => $id
+ 			    ]);
+
+
 			break;
 			default:
-				return redirect()->back()->with('error', 'Nie wybrano właściwej funkcji');
+				return redirect()->back()->with('error', 'Nie wybrano właściwej funkcji!');
 			break;
 		}
-		return redirect()->back()->with('message', 'Rejestracja zakończona sukcesem');
+		return redirect()->back()->with('success', 'Rejestracja zakończona sukcesem!');
 	}
+
+
+
+
+
 }
