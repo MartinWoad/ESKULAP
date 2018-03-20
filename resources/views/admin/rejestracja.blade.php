@@ -91,7 +91,7 @@
               <div class="form-group" id="gdyPacjent5" style="display: none;">
                 <label class="control-label" for="photo">Zdjęcie rentgentowskie</label>
                 <div class="controls">
-                  <input type="file" id="photo" name="photo" placeholder="" class="form-control-file">
+                  <input type="file" id="image" name="image" placeholder=""  class="form-control-file">
                   <p class="help-block">Wybierz zdjęcie rentgentowskie pacjenta</p>
                 </div>
               </div>
@@ -143,7 +143,7 @@
         $( "#gdyPacjent3" ).hide();
         $( "#gdyPacjent4" ).hide();
         $( "#gdyPacjent5" ).show();
-        $("#photo").prop('required',true);
+        $("#image").prop('required',true);
         $("#login").prop('required',false);
         $("#password").prop('required',false);
         $("#password_confirm").prop('required',false);
@@ -154,7 +154,7 @@
         $( "#gdyPacjent3" ).show();
         $( "#gdyPacjent4" ).show();
         $( "#gdyPacjent5" ).hide();
-        $("#photo").prop('required',false);
+        $("#image").prop('required',false);
         $("#login").prop('required',true);
         $("#password").prop('required',true);
         $("#password_confirm").prop('required',true);
