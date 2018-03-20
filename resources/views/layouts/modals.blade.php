@@ -200,13 +200,13 @@
                             <td class="text-center">
                                 <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
                                     <img src="img/photos/images.jpg" class="img-thumbnail">
-                                    <a class="delIcon" style="display:none"></a>
+                                    <a class="delIcon"></a>
                                 </div>
                             </td>
                              <td class="text-center">
                                  <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
                                      <img src="img/photos/images_color.bmp" class="img-thumbnail">
-                                     <a class="delIcon" style="display:none"></a>
+                                     <a class="delIcon"></a>
                                  </div>
                              </td>
                         </tr>
@@ -215,7 +215,7 @@
                             <td class="text-center">
                                 <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
                                     <img src="img/photos/images2.jpg" class="img-thumbnail">
-                                    <a class="delIcon" style="display:none" href="#"></a>
+                                    <a class="delIcon" href="#"></a>
                                 </div>
                             </td>
                             <td class="text-center">
@@ -239,14 +239,14 @@
     function showDeleteIcon(that) {
         var icon = that.getElementsByClassName('delIcon')[0];
         var img = that.getElementsByClassName('img-thumbnail')[0];
-        icon.style.display = 'inline-block';
+        icon.style.opacity = '1';
         img.style.filter = 'brightness(120%)';
     }
 
     function hideDeleteIcon(that){
         var icon = that.getElementsByClassName('delIcon')[0];
         var img = that.getElementsByClassName('img-thumbnail')[0];
-        icon.style.display = 'none';
+        icon.style.opacity = '0';
         img.style.filter = 'brightness(100%)';
     }
 </script>
