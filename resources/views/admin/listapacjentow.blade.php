@@ -5,11 +5,14 @@ Zarządzanie
 @endsection
 
 @section('head')
-    <link rel="stylesheet" href="{{ URL::to("css/jquery.dataTables.min.css") }}"></style>
+    <link rel="stylesheet" href="{{ URL::to("css/jquery.dataTables.min.css") }}">
 
     <!-- DataTables Plugin  -->
     <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.min.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/sum().js") }}"></script>
+    <?php
+    require_once('..\resources\views\layouts\modals.blade.php');
+    ?>
 @endsection
 
 @section('content')
@@ -44,10 +47,15 @@ Zarządzanie
                                     <td class="text-center">{{  $pacjent->pesel }}</td>
                                     <td class="text-center">{{  $pacjent->plec }}</td>
                                     <td class="text-center">{{  $pacjent->data_ur }}</td>
-                                    <td class="text-center">Zdjęcie</td>
+                                    <td class="text-center">
+                                      <button type="button" class="btn btn-xs btn-info" data-toggle="modal" data-target="#getPhotos">RTG</button>
+                                    </td>
                                     <td class="text-center">{{  DB::table('users')->where('id', $pacjent->id_lekarza)->first()->imie }} {{  DB::table('users')->where('id', $pacjent->id_lekarza)->first()->nazwisko }}</td>
                                     <td class="text-center">
-                                    <input name="delete" onclick="addItem(this);" class="btn btn-xs btn-danger" type="button" value="Usuń z bazy" />
+                                        <div class="btn-group btn-group-xs">
+                                            <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#editPatient">Edytuj</button>
+                                            <button name="delete" class="btn btn-danger" data-toggle="modal" data-target="#deleteUser">Usuń z bazy</button>
+                                        </div>
                                     </td>
                                 </tr>
                             @endforeach
