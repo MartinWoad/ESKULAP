@@ -26,7 +26,7 @@
         @endif
 
 
-        <form class="form" role="form" action='' method="POST">
+        <form class="form" role="form" action='' method="POST" enctype="multipart/form-data">
           <fieldset>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
