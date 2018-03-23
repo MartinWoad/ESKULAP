@@ -1,3 +1,57 @@
+
+    <!-- Funkcje do obsługi Modali-->
+    <script>
+
+    function setPatient(element) {
+        var id = $(element).data('id');
+        var imie = $(element).data('imie');
+        var nazwisko = $(element).data('nazwisko');
+        var plec = $(element).data('plec');
+        var dataUrodzenia = $(element).data('data');
+        var pesel = $(element).data('pesel');
+        var token = $(element).data('token');
+        $("#editPatient [name='id']").first().val( id );
+        $("#editPatient [name='forename']").first().val( imie );
+        $("#editPatient [name='surname']").first().val( nazwisko );
+        $("#editPatient [name='gender']").first().val( plec );
+        $("#editPatient [name='dateOfBirth']").first().val( dataUrodzenia );
+        $("#editPatient [name='pesel']").first().val( pesel );
+        $("#editPatient [name='_token']").first().val( token );
+    }
+
+    function setUser(element) {
+        var id = $(element).data('id');
+        var imie = $(element).data('imie');
+        var nazwisko = $(element).data('nazwisko');
+        var dataUrodzenia = $(element).data('data');
+        var pesel = $(element).data('pesel');
+        var login = $(element).data('login');
+        var token = $(element).data('token');
+        var funkcja = $(element).data('funkcja');
+        $("#editUser [name='id']").first().val( id );
+        $("#editUser [name='forename']").first().val( imie );
+        $("#editUser [name='surname']").first().val( nazwisko );
+        $("#editUser [name='dateOfBirth']").first().val( dataUrodzenia );
+        $("#editUser [name='pesel']").first().val( pesel );
+        $("#editUser [name='login']").first().val( login );
+        $("#editUser [name='_token']").first().val( token );
+        $("#editUser [name='funkcja']").first().val( funkcja );
+    }
+
+    function setDeleteUser(element){
+        var id    = $(element).data('id');
+        var token = $(element).data('token');
+        var funkcja = $(element).data('funkcja');
+        $("#deleteUser [name='id']").first().val(id);
+        $("#deleteUser [name='_token']").first().val(token);
+        $("#deleteUser [name='funkcja']").first().val(funkcja);
+    }
+
+
+
+    </script>   
+
+
 <div id="editUser" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
@@ -8,9 +62,20 @@
                 <h4 class="modal-title">Edytuj użytkownika</h4>
             </div>
             <div class="modal-body">
-                <form class="form" role="form" action='' method="POST">
+                <form class="form" role="form" action='funkcje' method="POST">
                     <fieldset>
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="_token" value="">
+                        <input type="hidden" name="action" value="editUser">
                         <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="funkcja">Funkcja</label>
+                                <select class="form-control-noborder" name="funkcja" id="funkcja">
+                                  <option value="lekarz">Lekarz</option>
+                                  <option value="ordynator">Ordynator</option>
+                                </select>
+                                <p class="help-block">Wybierz jaką funkcję ma spełniać użytkownik</p>
+                            </div>
                             <div class="form-group">
                                 <label class="control-label" for="forename">Imię</label>
                                 <div class="controls">
@@ -33,6 +98,9 @@
                                     <p class="help-block">Wprowadź datę urodzenia</p>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-md-6">
+
                             <div class="form-group">
                                 <label class="control-label" for="pesel">PESEL</label>
                                 <div class="controls">
@@ -40,47 +108,37 @@
                                     <p class="help-block">Wprowadź numer PESEL</p>
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label" for="username">Login</label>
                                 <div class="controls">
-                                    <input type="text" name="username" placeholder="" class="form-control-noborder" id="login">
+                                    <input type="text" name="login" placeholder="" class="form-control-noborder" id="login">
                                     <p class="help-block">Wprowadź login (bez spacji)</p>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="control-label" for="password">Hasło</label>
                                 <div class="controls">
                                     <input type="password" id="password" name="password" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Hasło powinno się składać z co najmniej 4 znaków</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="password_confirm">Potwierdź hasło</label>
-                                <div class="controls">
-                                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Wprowadzone hasła muszą być identyczne</p>
+                                    <p class="help-block">Nowe hasło powinno się składać z co najmniej 5 znaków</p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-xs-12" style="text-align: center;">
-                                <div class="form-group" >
-                                    <div class="controls">
-                                        <button class="btn btn-success" id="send_button">Zapisz zmiany</button>
-                                        <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-                                    </div>
-                                </div>
-                        </div>
-                    </fieldset>
-                </form>
+                    
             </div>
+            <div class="modal-footer">
+                <button class="btn btn-success" id="send_button">Zapisz zmiany</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+            </div>
+            </fieldset>
+          </form>
         </div>
 
     </div>
 </div>
+
+
+
 
 <div id="editPatient" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
@@ -92,11 +150,11 @@
                 <h4 class="modal-title">Edytuj dane pacjenta</h4>
             </div>
             <div class="modal-body">
-                <form class="form" role="form" action='' method="POST">
+                <form class="form" role="form" action='funkcje' method="POST">
                     <fieldset>
-                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                        <input type="hidden" name="patientsDoctor" value="{{ $profil->id }}">
-                        <input type="hidden" name="funkcja" value="pacjent">
+                        <input type="hidden" name="id" value="">
+                        <input type="hidden" name="_token" value="">
+                        <input type="hidden" name="action" value="editPatient">
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label class="control-label"  for="forename">Imię</label>
@@ -120,7 +178,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="gender">Płeć</label>
@@ -156,97 +213,32 @@
 
 <div id="deleteUser" class="modal fade" role="dialog">
     <div class="modal-dialog">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Usuń użytkownika</h4>
             </div>
             <div class="modal-body">
-                <p>Czy na pewno chcesz usunąć użytkownika -IMIE NAZWISKO-?</p>
+                <p>Czy na pewno chcesz usunąć użytkownika?</p>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-success" data-dismiss="modal">Usuń</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                    <div class="btn-group btn-group-justified" role="group" aria-label="group button">
+                        <fieldset>
+                        <form action="funkcje" method="post">
+                            <input type="hidden" name="_token" value="">
+                            <input type="hidden" name="id" value=""/>
+                            <input type="hidden" name="funkcja" value=""/>
+                            <input type="hidden" name="action" value="delete"/>
+                            <button type="submit" class="btn btn-danger btn-ok btn-sm">Usuń</button>
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Anuluj</button>
+                        </form>
+                    </fieldset>
+                    </div>
             </div>
         </div>
 
     </div>
 </div>
 
-<div id="getPhotos" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Zdjęcia RTG pacjenta -IMIE NAZWISKO-</h4>
-            </div>
-            <div class="modal-body">
-                <button type="button" class="btn btn-xs btn-success" style="margin-bottom:15px;">Dodaj zdjęcie</button>
-                <table id="patientPhotos" class="display" cellspacing="0" width="100%">
-                    <thead>
-                    <tr>
-                        <th class="text-center" style="min-width: 20%;">Data przesłania</th>
-                        <th class="text-center">Zdjęcie oryginalne</th>
-                        <th class="text-center">Zdjęcie kolorowe</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="text-center">3 marca 2018 r.</td>
-                            <td class="text-center">
-                                <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
-                                    <img src="img/photos/images.jpg" class="img-thumbnail">
-                                    <a class="delIcon"></a>
-                                </div>
-                            </td>
-                             <td class="text-center">
-                                 <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
-                                     <img src="img/photos/images_color.bmp" class="img-thumbnail">
-                                     <a class="delIcon"></a>
-                                 </div>
-                             </td>
-                        </tr>
-                        <tr>
-                            <td class="text-center">14 marca 2018 r.</td>
-                            <td class="text-center">
-                                <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
-                                    <img src="img/photos/images2.jpg" class="img-thumbnail">
-                                    <a class="delIcon" href="#"></a>
-                                </div>
-                            </td>
-                            <td class="text-center">
-                                <button type="button" class="btn btn-success">Pokoloruj</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <script>
-                $(document).ready(function() {
-                    var photosTable   = $('#patientPhotos').DataTable();
-                });
-            </script>
-        </div>
 
-    </div>
-</div>
-
-<script>
-    function showDeleteIcon(that) {
-        var icon = that.getElementsByClassName('delIcon')[0];
-        var img = that.getElementsByClassName('img-thumbnail')[0];
-        icon.style.opacity = '1';
-        img.style.filter = 'brightness(120%)';
-    }
-
-    function hideDeleteIcon(that){
-        var icon = that.getElementsByClassName('delIcon')[0];
-        var img = that.getElementsByClassName('img-thumbnail')[0];
-        icon.style.opacity = '0';
-        img.style.filter = 'brightness(100%)';
-    }
-</script>

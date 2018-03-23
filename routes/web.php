@@ -22,6 +22,11 @@ Route::get('/', function () {
 
 Route::post('/', 'MainController@zaloguj');
 
+
+Route::post('/funkcje', 'MainController@funkcje');
+
+Route::post('/getPhotos', 'MainController@getPhotos');
+
 /*
 	Panel administratora
 	Wyświetlany - tylko po zalogowaniu się z wykorzystaniem danych administratora.

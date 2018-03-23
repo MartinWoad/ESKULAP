@@ -28,6 +28,12 @@ Rejestracja
 @endsection
 <?php     
     $id = session()->get('user');
+    $pacjenci;
+    $ordynator = false;
+    if(DB::table('users')->where('id', $id)->first()->funkcja == "ordynator")
+    {
+        $ordynator = true;
+    }
     $profil = DB::table('users')->where('id', $id)->first();
 ?>
 
@@ -60,7 +66,23 @@ Rejestracja
               <input type="hidden" name="funkcja" value="pacjent">
              
             <div class="col-md-4 col-md-offset-4 col-sm-8 col-sm-offset-2">
-                
+              @if($ordynator == true)
+              @php
+                $lekarze = DB::table('users')->where('funkcja', 'lekarz')->get();
+              @endphp
+              <div class="form-group">
+                <label for="patientsDoctor">Lekarz</label>
+                <select class="form-control-noborder" name="patientsDoctor" id="patientsDoctor">
+                  @if(sizeof($lekarze) == 0)
+                    <option value="none">Brak lekarzy</option>
+                  @endif
+                  @foreach($lekarze as $test)
+                    <option value="{{ $test->id }}">{{ $test->imie }} {{ $test->nazwisko }}</option>
+                  @endforeach
+                </select>
+                <p class="help-block">Wybierz lekarza, do którego przypisany będzie nowy pacjent</p>
+              </div>
+              @endif
               <div class="form-group">
                 <label class="control-label" for="forename">Imię</label>
                 <div class="controls">

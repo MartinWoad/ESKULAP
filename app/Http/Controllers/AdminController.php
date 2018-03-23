@@ -159,8 +159,6 @@ class AdminController extends Controller
 					return redirect()->back()->with('error', "Wybrany plik jest zbyt duży.");
 				}
 
-				
-
 				$id = DB::table('patients')->insertGetId(
                 [
                 'imie' => $imie,
@@ -178,6 +176,7 @@ class AdminController extends Controller
  			    DB::table('photos')->insert(
  			    [
  			    	'directory' => $destinationPath."/".$fileName,
+ 			    	'data' => date("Y-m-d"),
  			    	'oryginal'  => true,
  			    	'id_pacjenta' => $id
  			    ]);
