@@ -1,11 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.7.0
--- https://www.phpmyadmin.net/
---
--- Host: 127.0.0.1
--- Czas generowania: 14 Mar 2018, 16:14
--- Wersja serwera: 10.1.25-MariaDB
--- Wersja PHP: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -21,6 +13,19 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `eskulap`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `coloured`
+--
+
+CREATE TABLE `coloured` (
+  `id` int(11) NOT NULL,
+  `directory` text NOT NULL,
+  `date` date NOT NULL,
+  `original_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -46,6 +51,7 @@ CREATE TABLE `patients` (
 
 CREATE TABLE `photos` (
   `id` int(11) NOT NULL,
+  `data` date NOT NULL,
   `directory` text NOT NULL,
   `oryginal` tinyint(1) NOT NULL,
   `id_pacjenta` int(11) NOT NULL
@@ -81,6 +87,12 @@ INSERT INTO `users` (`id`, `login`, `haslo`, `imie`, `nazwisko`, `pesel`, `data_
 --
 
 --
+-- Indexes for table `coloured`
+--
+ALTER TABLE `coloured`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `patients`
 --
 ALTER TABLE `patients`
@@ -103,20 +115,25 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT dla tabeli `coloured`
+--
+ALTER TABLE `coloured`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+--
 -- AUTO_INCREMENT dla tabeli `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
 -- AUTO_INCREMENT dla tabeli `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
