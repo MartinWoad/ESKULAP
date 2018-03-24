@@ -30,6 +30,12 @@ Zarządzanie
                         <strong>Sukces!</strong> {{ session()->get('message') }}
                       </div>
                     @endif
+                    @if (session()->get('error'))
+                      <div class="alert alert-danger alert-dismissible fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Ups!</strong> {{ session()->get('error') }}
+                      </div>
+                    @endif
                     @if(sizeof($pracownicy) != 0)
                     <table id="workers" class="display" cellspacing="0" width="100%">
                         <thead>

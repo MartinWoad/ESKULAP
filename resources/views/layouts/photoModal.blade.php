@@ -17,6 +17,18 @@
                 <h4 class="modal-title">Zdjęcia RTG pacjenta</h4>
             </div>
             <div class="modal-body">
+                @if (session()->get('message'))
+                      <div class="alert alert-success alert-dismissible fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Sukces!</strong> {{ session()->get('message') }}
+                      </div>
+                @endif
+                @if (session()->get('error'))
+                      <div class="alert alert-danger alert-dismissible fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Ups!</strong> {{ session()->get('error') }}
+                      </div>
+                @endif
                 <form class="form" role="form" action='funkcje' method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="{{ $id }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
@@ -49,6 +61,7 @@
                                 
                                 <form class="form" role="form" action='funkcje' method="POST">
                                             <input type="hidden" name="id" value="{{ $zdjecie->id }}">
+                                            <input type="hidden" name="patientId" value="{{ $zdjecie->id_pacjenta }}">
                                             <input type="hidden" name="coloured" value="1">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="deletePhoto">
@@ -66,6 +79,7 @@
                                     <div class="pic-container" onmouseover="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
                                         <form class="form" role="form" action='funkcje' method="POST">
                                             <input type="hidden" name="id" value="{{ DB::table('coloured')->where('original_id', $zdjecie->id)->first()->id }}">
+                                            <input type="hidden" name="patientId" value="{{ $zdjecie->id_pacjenta }}">
                                             <input type="hidden" name="coloured" value="0">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="deletePhoto">
@@ -80,6 +94,7 @@
                                 <td class="text-center">
                                     <form class="form" role="form" action='funkcje' method="POST">
                                             <input type="hidden" name="id" value="{{ $zdjecie->id }}">
+                                            <input type="hidden" name="patientId" value="{{ $zdjecie->id_pacjenta }}">
                                             <input type="hidden" name="coloured" value="{{ $zdjecie->oryginal }}">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="colorPhoto">

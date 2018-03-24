@@ -36,7 +36,11 @@ Zarządzanie
         <script>
             $('#getPhotos').modal('show'); 
         </script>
-     @endif
+        @php
+            session()->forget('message');
+            session()->forget('error');
+        @endphp
+    @endif
         <div class="col-md-10 content">
             <div class="panel panel-default">
                 <div class="panel-heading">
@@ -47,6 +51,12 @@ Zarządzanie
                       <div class="alert alert-success alert-dismissible fade in">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Sukces!</strong> {{ session()->get('message') }}
+                      </div>
+                    @endif
+                    @if (session()->get('error'))
+                      <div class="alert alert-danger alert-dismissible fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Ups!</strong> {{ session()->get('error') }}
                       </div>
                     @endif
                     @if(sizeof($pacjenci) != 0)

@@ -20,13 +20,18 @@ Zarządzanie
         $pacjenci = DB::table('patients')->get();
     @endphp
 
+        
 
         @if (session()->get('photoModal'))
             @include('layouts.photoModal', array('id' => session()->get('photoModal')))
-
+            
             <script>
                 $('#getPhotos').modal('show'); 
             </script>
+            @php
+                session()->forget('message');
+                session()->forget('error');
+            @endphp
          @endif
 
         <div class="col-md-10 content">
@@ -39,6 +44,12 @@ Zarządzanie
                       <div class="alert alert-success alert-dismissible fade in">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Sukces!</strong> {{ session()->get('message') }}
+                      </div>
+                    @endif
+                    @if (session()->get('error'))
+                      <div class="alert alert-danger alert-dismissible fade in">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Ups!</strong> {{ session()->get('error') }}
                       </div>
                     @endif
                     @if(sizeof($pacjenci) != 0)
