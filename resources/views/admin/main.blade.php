@@ -3,6 +3,10 @@
 @section('title')
 Admin
 @endsection
+<?php
+    $pracownicy = DB::table('users')->where('funkcja', "not like", "admin")->get();
+    $pacjenci = DB::table('patients')->get();
+?>
 
 @section('content')
 
@@ -12,12 +16,14 @@ Admin
                     Panel administratora
                 </div>
                 <div class="panel-body">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    			    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-				quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-				consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-				cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-				proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                    <h2>Witaj w Eskulapie.</h2>
+
+                    <p>Ilość zarejstrowanych pracowników w systemie: {{ sizeof($pracownicy) }}</p>
+                    <p>Ilość zarejstrowanych pacjętów w systemie: {{ sizeof($pacjenci) }}</p>
+                    <p>Ogółem liczba osób w systemie: {{ sizeof($pracownicy) + sizeof($pacjenci) }}</p>
+                </div>
+                <div class="panel-footer">
+                    <p class="text-right">Data zalogowania do systemu: {{ date('Y-m-d H:i:s') }}</p>
                 </div>
             </div>
 		</div>
