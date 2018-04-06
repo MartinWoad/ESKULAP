@@ -16,7 +16,7 @@ Admin
                     Panel administratora
                 </div>
                 <div class="panel-body">
-                    <h2>Witaj w eskulapie.</h2>
+                    <h2>Witaj w Eskulapie.</h2>
 
                     <p>Ilość zarejstrowanych pracowników w systemie: {{ sizeof($pracownicy) }}</p>
                     <p>Ilość zarejstrowanych pacjętów w systemie: {{ sizeof($pacjenci) }}</p>

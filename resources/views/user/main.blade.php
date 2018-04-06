@@ -25,7 +25,7 @@ Zarządzanie
                     Panel zarządzania pracowników
                 </div>
                 <div class="panel-body">
-                    <h2>Witaj w eskulapie.</h2>
+                    <h2>Witaj w Eskulapie.</h2>
                     
                     @if($ordynator == true)
                         <p>Liczba lekarzy w systemie: : {{ sizeof($lekarze) }}</p>
