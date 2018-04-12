@@ -54,12 +54,12 @@
 
 <div id="editUser" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
-
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edytuj użytkownika</h4>
+                <h5 class="modal-title">Edytuj dane pracownika</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form class="form" role="form" action='funkcje' method="POST">
@@ -67,87 +67,82 @@
                         <input type="hidden" name="id" value="">
                         <input type="hidden" name="_token" value="">
                         <input type="hidden" name="action" value="editUser">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="funkcja">Funkcja</label>
-                                <select class="form-control-noborder" name="funkcja" id="funkcja">
-                                  <option value="lekarz">Lekarz</option>
-                                  <option value="ordynator">Ordynator</option>
-                                </select>
-                                <p class="help-block">Wybierz jaką funkcję ma spełniać użytkownik</p>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="forename">Imię</label>
-                                <div class="controls">
-                                    <input type="text" name="forename" id="forename" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Wprowadź imię</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="funkcja">Funkcja</label>
+                                    <select class="form-control" name="funkcja" id="funkcja">
+                                      <option value="lekarz">Lekarz</option>
+                                      <option value="ordynator">Ordynator</option>
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="surname">Nazwisko</label>
-                                <div class="controls">
-                                    <input type="text" name="surname" id="surname" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Wprowadź nazwisko</p>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="forename">Imię</label>
+                                    <div class="controls">
+                                        <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                                    </div>
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="surname">Nazwisko</label>
+                                    <div class="controls">
+                                        <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                                    </div>
+                                </div>
 
-                            <div class="form-group">
-                                <label class="control-label" for="dateOfBirth">Data urodzenia</label>
-                                <div class="controls">
-                                    <input type="date" name="dateOfBirth" placeholder="" class="form-control-noborder" id="dateOfBirth">
-                                    <p class="help-block">Wprowadź datę urodzenia</p>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="dateOfBirth">Data urodzenia</label>
+                                    <div class="controls">
+                                        <input type="date" name="dateOfBirth" placeholder="" class="form-control" id="dateOfBirth">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-form-label" for="pesel">PESEL</label>
+                                    <div class="controls">
+                                        <input type="text" name="pesel" placeholder="" id="pesel" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="username">Login</label>
+                                    <div class="controls">
+                                        <input type="text" name="login" placeholder="" class="form-control" id="login">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="password">Hasło</label>
+                                    <div class="controls">
+                                        <input type="password" id="password" name="password" placeholder="" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-
+                        <div class="col-xs-12 text-center">
                             <div class="form-group">
-                                <label class="control-label" for="pesel">PESEL</label>
                                 <div class="controls">
-                                    <input type="text" name="pesel" placeholder="" id="pesel" class="form-control-noborder">
-                                    <p class="help-block">Wprowadź numer PESEL</p>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="username">Login</label>
-                                <div class="controls">
-                                    <input type="text" name="login" placeholder="" class="form-control-noborder" id="login">
-                                    <p class="help-block">Wprowadź login (bez spacji)</p>
-                                </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label class="control-label" for="password">Hasło</label>
-                                <div class="controls">
-                                    <input type="password" id="password" name="password" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Nowe hasło powinno się składać z co najmniej 5 znaków</p>
+                                    <button class="btn btn-success" id="send_button">Zapisz zmiany</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
                                 </div>
                             </div>
                         </div>
-                    
+                    </fieldset>
+                </form>
             </div>
-            <div class="modal-footer">
-                <button class="btn btn-success" id="send_button">Zapisz zmiany</button>
-                <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
-            </div>
-            </fieldset>
-          </form>
         </div>
-
     </div>
 </div>
-
 
 
 
 <div id="editPatient" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
-        <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edytuj dane pacjenta</h4>
+                <h5 class="modal-title">Edytuj dane pacjenta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <form class="form" role="form" action='funkcje' method="POST">
@@ -155,47 +150,44 @@
                         <input type="hidden" name="id" value="">
                         <input type="hidden" name="_token" value="">
                         <input type="hidden" name="action" value="editPatient">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="control-label"  for="forename">Imię</label>
-                                <div class="controls">
-                                    <input type="text" name="forename" id="forename" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Wprowadź imię</p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-form-label"  for="forename">Imię</label>
+                                    <div class="controls">
+                                        <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="surname">Nazwisko</label>
+                                    <div class="controls">
+                                        <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label" for="dateOfBirth">Data urodzenia</label>
+                                    <div class="controls">
+                                        <input type="date" name="dateOfBirth" placeholder="" class="form-control">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label" for="surname">Nazwisko</label>
-                                <div class="controls">
-                                    <input type="text" name="surname" id="surname" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Wprowadź nazwisko</p>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="gender">Płeć</label>
+                                    <select class="form-control" name="gender" id="gender">
+                                        <option value="Kobieta">Kobieta</option>
+                                        <option value="Mężczyzna">Mężczyzna</option>
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label" for="dateOfBirth">Data urodzenia</label>
-                                <div class="controls">
-                                    <input type="date" name="dateOfBirth" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Wprowadź datę urodzenia</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label for="gender">Płeć</label>
-                                <select class="form-control-noborder" name="gender" id="gender">
-                                    <option value="Kobieta">Kobieta</option>
-                                    <option value="Mężczyzna">Mężczyzna</option>
-                                </select>
-                                <p class="help-block">Wybierz płeć </p>
-                            </div>
-                            <div class="form-group">
-                                <label class="control-label"  for="pesel">PESEL</label>
-                                <div class="controls">
-                                    <input type="text" name="pesel" placeholder="" class="form-control-noborder">
-                                    <p class="help-block">Wprowadź numer PESEL</p>
+                                <div class="form-group">
+                                    <label class="col-form-label"  for="pesel">PESEL</label>
+                                    <div class="controls">
+                                        <input type="text" name="pesel" placeholder="" class="form-control">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-xs-12" style="text-align: center;">
+                        <div class="col-xs-12 text-center">
                             <div class="form-group" >
                                 <div class="controls">
                                     <button class="btn btn-success" id="send_button">Zapisz zmiany</button>
@@ -207,7 +199,6 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>
 
@@ -215,8 +206,10 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Usuń użytkownika</h4>
+                <h5 class="modal-title">Usuń użytkownika</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 <p>Czy na pewno chcesz usunąć użytkownika?</p>

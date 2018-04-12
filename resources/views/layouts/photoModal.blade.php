@@ -18,13 +18,13 @@
             </div>
             <div class="modal-body">
                 @if (session()->get('message'))
-                      <div class="alert alert-success alert-dismissible fade in">
+                      <div class="alert alert-success alert-dismissible fade show">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Sukces!</strong> {{ session()->get('message') }}
                       </div>
                 @endif
                 @if (session()->get('error'))
-                      <div class="alert alert-danger alert-dismissible fade in">
+                      <div class="alert alert-danger alert-dismissible fade show">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Ups!</strong> {{ session()->get('error') }}
                       </div>

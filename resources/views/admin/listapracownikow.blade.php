@@ -17,35 +17,33 @@ Zarządzanie
 @section('content')
     <?php
         $pracownicy = DB::table('users')->where('funkcja', "not like", "admin")->get();
-     ?>       
-        <div class="col-md-10 content">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    Pracownicy
-                </div>
-                <div class="panel-body">
-                    @if (session()->get('message'))
-                      <div class="alert alert-success alert-dismissible fade in">
+     ?>
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                @if (session()->get('message'))
+                    <div class="alert alert-success alert-dismissible fade show">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Sukces!</strong> {{ session()->get('message') }}
-                      </div>
-                    @endif
-                    @if (session()->get('error'))
-                      <div class="alert alert-danger alert-dismissible fade in">
+                    </div>
+                @endif
+                @if (session()->get('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
                         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
                         <strong>Ups!</strong> {{ session()->get('error') }}
-                      </div>
-                    @endif
+                    </div>
+                @endif
+                <h4 class="card-title">Lista pracowników</h4>
                     @if(sizeof($pracownicy) != 0)
                     <table id="workers" class="display" cellspacing="0" width="100%">
                         <thead>
                             <tr>
-                                <th>Imię</th>
-                                <th>Nazwisko</th>
-                                <th>PESEL</th>
-                                <th>Data urodzenia</th>
-                                <th>Funkcja</th>
-                                <th>Edycja</th>
+                                <th class="text-center">Imię</th>
+                                <th class="text-center">Nazwisko</th>
+                                <th class="text-center">PESEL</th>
+                                <th class="text-center">Data urodzenia</th>
+                                <th class="text-center">Funkcja</th>
+                                <th class="text-center">Edycja</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,9 +56,9 @@ Zarządzanie
                                     <td class="text-center">{{  $pracownik->data_ur }}</td>
                                     <td class="text-center">{{  $pracownik->funkcja }}</td>
                                     <td class="text-center">
-                                        <div class="btn-group btn-group-xs">
-                                            <button type="button" data-token="{{ csrf_token() }}" data-funkcja="{{ $pracownik->funkcja }}" data-id="{{ $pracownik->id }}" data-imie="{{ $pracownik->imie }}" data-nazwisko="{{ $pracownik->nazwisko }}" data-data="{{ $pracownik->data_ur }}" data-pesel="{{ $pracownik->pesel }}" data-login="{{ $pracownik->login }}" class="btn btn-warning" data-toggle="modal" onclick="setUser(this);"  data-target="#editUser">Edytuj</button>
-                                            <button name="delete" data-funkcja="{{ $pracownik->funkcja }}" data-token="{{ csrf_token() }}" data-id="{{ $pracownik->id }}" class="btn btn-danger" onclick="setDeleteUser(this);" data-toggle="modal" data-target="#deleteUser">Usuń z bazy</button>
+                                        <div class="btn-group btn-group">
+                                            <button type="button" data-token="{{ csrf_token() }}" data-funkcja="{{ $pracownik->funkcja }}" data-id="{{ $pracownik->id }}" data-imie="{{ $pracownik->imie }}" data-nazwisko="{{ $pracownik->nazwisko }}" data-data="{{ $pracownik->data_ur }}" data-pesel="{{ $pracownik->pesel }}" data-login="{{ $pracownik->login }}" class="btn btn-info" data-toggle="modal" onclick="setUser(this);"  data-target="#editUser"><i class="mdi mdi-account-edit"></i>Edytuj</button>
+                                            <button name="delete" data-funkcja="{{ $pracownik->funkcja }}" data-token="{{ csrf_token() }}" data-id="{{ $pracownik->id }}" class="btn btn-danger" onclick="setDeleteUser(this);" data-toggle="modal" data-target="#deleteUser"><i class="mdi mdi-delete"></i>Usuń z bazy</button>
                                         </div>
                                     </td>
                                 </tr>
