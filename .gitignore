@@ -14,6 +14,11 @@ npm-debug.log
 yarn-error.log
 .env
 
+# Ignorowanie node_modules
+/public/node_modules
+
+# Ignorowanie wrzuconych do testow zdjec do pokolorowania i pokolorowanych
+/public/pictures/
 
 # Created by https://www.gitignore.io/api/netbeans,phpstorm,sublimetext,visualstudiocode
 
