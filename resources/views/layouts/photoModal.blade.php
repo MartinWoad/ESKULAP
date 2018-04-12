@@ -11,10 +11,12 @@
 @endphp
 <div id="getPhotos" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+        <div class="modal-content col-12">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Zdjęcia RTG pacjenta</h4>
+                <h5 class="modal-title">Zdjęcia RTG pacjenta</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
             <div class="modal-body">
                 @if (session()->get('message'))
@@ -29,48 +31,57 @@
                         <strong>Ups!</strong> {{ session()->get('error') }}
                       </div>
                 @endif
-                <form class="form" role="form" action='funkcje' method="POST" enctype="multipart/form-data">
+                    <p class="card-description">
+                        Dodaj zdjęcie rentgenowskie
+                    </p>
+                <form class="form col-12" role="form" action='funkcje' method="POST" enctype="multipart/form-data">
                     <input type="hidden" name="id" value="{{ $id }}">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
                     <input type="hidden" name="action" value="addPhoto">
-                    <div class="form-group">
-                        <label class="control-label" for="photo">Zdjęcie rentgentowskie</label>
-                        <div class="controls">
-                          <input type="file" id="image" name="image" placeholder=""  class="form-control-file">
-                          <p class="help-block">Wybierz zdjęcie rentgentowskie</p>
+                        <div class="form-group row">
+                            <div class="controls col-9">
+                                <input required type="file" id="image" name="image" class="file-upload-default">
+                                <div class="input-group">
+                                    <input type="text" class="form-control file-upload-info" disabled="" placeholder="Zamieść zdjęcie rentgenowskie">
+                                    <span class="input-group-append">
+                                    <button class="file-upload-browse btn btn-info" type="button"><i class="mdi mdi-folder-image"></i>Wybierz zdjęcie</button>
+                                </span>
+                                </div>
+                            </div>
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-success form-control"><i class="mdi mdi-plus-circle-outline"></i>Dodaj</button>
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit">Dodaj</button>
                 </form>
-
-                <table id="patientPhotos" class="display" cellspacing="0" width="100%">
-                    <thead>
+                    <hr/>
+            <table id="patientPhotos" class="display " cellspacing="0" width="100%">
+                <thead>
+                <tr>
+                    <th class="text-center" style="min-width: 20%;">Data przesłania</th>
+                    <th class="text-center">Zdjęcie oryginalne</th>
+                    <th class="text-center">Zdjęcie kolorowe</th>
+                </tr>
+                </thead>
+                <tbody>
+                @if(sizeof($zdjecia) != 0)
+                    @foreach($zdjecia as $zdjecie)
                     <tr>
-                        <th class="text-center" style="min-width: 20%;">Data przesłania</th>
-                        <th class="text-center">Zdjęcie oryginalne</th>
-                        <th class="text-center">Zdjęcie kolorowe</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @if(sizeof($zdjecia) != 0)
-                        @foreach($zdjecia as $zdjecie)
-                        <tr>
-                            <td class="text-center">{{ $zdjecie->data }}</td> 
-                            <td class="text-center">
-                                <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
-                                
-                                <form class="form" role="form" action='funkcje' method="POST">
-                                            <input type="hidden" name="id" value="{{ $zdjecie->id }}">
-                                            <input type="hidden" name="patientId" value="{{ $zdjecie->id_pacjenta }}">
-                                            <input type="hidden" name="coloured" value="1">
-                                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                            <input type="hidden" name="action" value="deletePhoto">
-                                            <img src="{{ $zdjecie->directory }}" class="img-thumbnail">
-                                            @if(session()->get('admin') == "true")
-                                            <a class="delIcon"></a>
-                                            <button class="delIcon"></button>
-                                            @endif
-                                </form>
+                        <td class="text-center">{{ $zdjecie->data }}</td>
+                        <td class="text-center">
+                            <div class="pic-container" onmouseover ="showDeleteIcon(this);" onmouseout="hideDeleteIcon(this);">
+
+                            <form class="form" role="form" action='funkcje' method="POST">
+                                        <input type="hidden" name="id" value="{{ $zdjecie->id }}">
+                                        <input type="hidden" name="patientId" value="{{ $zdjecie->id_pacjenta }}">
+                                        <input type="hidden" name="coloured" value="1">
+                                        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="action" value="deletePhoto">
+                                        <img src="{{ $zdjecie->directory }}" class="img-thumbnail">
+                                        @if(session()->get('admin') == "true")
+                                        <a class="delIcon"><i class="mdi mdi-close" style="color:red;"></i></a>
+                                        <button class="delIcon"></button>
+                                        @endif
+                            </form>
                               
                                 </div>
                             </td>
@@ -84,8 +95,8 @@
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="deletePhoto">
                                             <img src="{{ DB::table('coloured')->where('original_id', $zdjecie->id)->first()->directory }}" class="img-thumbnail">
-                                            <a class="delIcon"></a>
-                                            <button class="delIcon"></button>
+                                            <a class="delIcon"><i class="mdi mdi-close" style="color:red;"></i></a>
+                                            <button class="delIcon"></button>
                                         </form>
                                          
                                     </div>
@@ -98,7 +109,7 @@
                                             <input type="hidden" name="coloured" value="{{ $zdjecie->oryginal }}">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="colorPhoto">
-                                            <button type="submit" class="btn btn-success">Pokoloruj</button>
+                                            <button type="submit" class="btn btn-light"><i class="mdi mdi-format-color-fill"></i>Pokoloruj</button>
                                     </form>
                                     
                                 </td>
@@ -152,7 +163,7 @@
     </div>
 </div>
 
-
+<script src="{{ URL::to('js/file-upload.js')}}"></script>
 <script>
     function showDeleteIcon(that) {
         var icon = that.getElementsByClassName('delIcon')[0];

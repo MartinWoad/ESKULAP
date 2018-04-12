@@ -5,10 +5,8 @@ Rejestracja
 @endsection
 
 
-@section('head')
-
-@endsection
-<?php     
+@section('content')
+    <?php
     $id = session()->get('user');
     $pacjenci;
     $ordynator = false;
@@ -17,9 +15,7 @@ Rejestracja
         $ordynator = true;
     }
     $profil = DB::table('users')->where('id', $id)->first();
-?>
-
-@section('content')
+    ?>
     @if (session()->get('error'))
         <div class="alert alert-danger alert-dismissible fade show">
             <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
@@ -124,15 +120,15 @@ Rejestracja
                                     <div class="input-group col-sm-8">
                                         <input type="text" class="form-control file-upload-info" disabled="" placeholder="Zamieść zdjęcie rentgenowskie">
                                         <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                                            <button class="file-upload-browse btn btn-info" type="button"><i class="mdi mdi-folder-image"></i>Wybierz zdjęcie</button>
                                         </span>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="row mt-4 justify-content-md-center">
-                                <button type="submit" class="btn btn-success mr-2 ">Zarejestruj pacjenta</button>
-                                <button type="reset" value="Reset" name="reset" class="btn btn-light">Wyczyść formularz</button>
+                                <button type="submit" class="btn btn-success mr-2"><i class="mdi mdi-account-plus"></i>Zarejestruj pacjenta</button>
+                                <button type="reset" value="Reset" name="reset" class="btn btn-light"><i class="mdi mdi-undo"></i>Wyczyść formularz</button>
                         </div>
                     </fieldset>
                 </form>

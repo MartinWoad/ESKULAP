@@ -100,7 +100,7 @@
                   <div class="input-group col-sm-8">
                     <input type="text" class="form-control file-upload-info" disabled="" placeholder="Zamieść zdjęcie rentgenowskie">
                     <span class="input-group-append">
-                        <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                      <button class="file-upload-browse btn btn-info" type="button"><i class="mdi mdi-folder-image"></i>Wybierz zdjęcie</button>
                     </span>
                   </div>
                 </div>
@@ -125,9 +125,9 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-12 text-center mt-4">
-              <button class="btn btn-success mr-2 " onclick="test();" id="send_button">Zarejestruj pacjenta</button>
-              <button type="reset" value="Reset" name="reset" class="btn btn-light">Wyczyść formularz</button>
+            <div class="row mt-4 justify-content-md-center">
+              <button type="submit" class="btn btn-success mr-2"><i class="mdi mdi-account-plus"></i>Zarejestruj pacjenta</button>
+              <button type="reset" value="Reset" name="reset" class="btn btn-light"><i class="mdi mdi-undo"></i>Wyczyść formularz</button>
             </div>
           </fieldset>
         </form>
