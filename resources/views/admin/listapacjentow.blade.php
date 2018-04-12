@@ -108,6 +108,4 @@ Zarządzanie
         var patientsTable   = $('#patients').DataTable();
     });
     </script>
-
-
 @endsection

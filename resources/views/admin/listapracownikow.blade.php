@@ -72,38 +72,34 @@ Zarządzanie
                 </div>
             </div>
         </div>
-
     <script>
     $(document).ready(function() {
         var workersTable   = $('#workers').DataTable( {
-                                                "language": {
-                                                    "decimal":        "",
-                                                    "emptyTable":     "Brak danych w tabeli",
-                                                    "info":           "Strona _PAGE_ z _PAGES_",
-                                                    "infoEmpty":      "Brak pracowników do wyświetlenia.",
-                                                    "infoFiltered":   "(odfiltrowane z _MAX_ wyników)",
-                                                    "infoPostFix":    "",
-                                                    "thousands":      ",",
-                                                    "lengthMenu":     "Ilość pracowników na stronie   _MENU_",
-                                                    "loadingRecords": "Ładuję...",
-                                                    "processing":     "Przetwarzanie...",
-                                                    "search":         "Wyszukaj:",
-                                                    "zeroRecords":    "Brak wyników odpowiadających Twoim kryteriom",
-                                                    "paginate": {
-                                                        "first":      "Pierwsza",
-                                                        "last":       "Ostatnia",
-                                                        "next":       "Następna",
-                                                        "previous":   "Poprzednia"
-                                                    },
-                                                    "aria": {
-                                                        "sortAscending":  ": posortuj tabelę rosnąco",
-                                                        "sortDescending": ": posortuj tabelę malejąco"
-                                                    }
-                                                }
-                                            } );
+            "language": {
+                "decimal":        "",
+                "emptyTable":     "Brak danych w tabeli",
+                "info":           "Strona _PAGE_ z _PAGES_",
+                "infoEmpty":      "Brak pracowników do wyświetlenia.",
+                "infoFiltered":   "(odfiltrowane z _MAX_ wyników)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Ilość pracowników na stronie   _MENU_",
+                "loadingRecords": "Ładuję...",
+                "processing":     "Przetwarzanie...",
+                "search":         "Wyszukaj:",
+                "zeroRecords":    "Brak wyników odpowiadających Twoim kryteriom",
+                "paginate": {
+                    "first":      "Pierwsza",
+                    "last":       "Ostatnia",
+                    "next":       "Następna",
+                    "previous":   "Poprzednia"
+                },
+                "aria": {
+                    "sortAscending":  ": posortuj tabelę rosnąco",
+                    "sortDescending": ": posortuj tabelę malejąco"
+                }
+            }
+        } );
     });
     </script>
-
-
-
 @endsection

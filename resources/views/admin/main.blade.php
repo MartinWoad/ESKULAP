@@ -3,10 +3,6 @@
 @section('title')
 Panel administratora
 @endsection
-<?php
-    $pracownicy = DB::table('users')->where('funkcja', "not like", "admin")->get();
-    $pacjenci = DB::table('patients')->get();
-?>
 
 @section('content')
 

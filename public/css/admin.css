@@ -5,3 +5,48 @@
 .nav-category .nav-link {
     color: #4dabc0 !important;
 }
+
+.pic-container {
+    width: 192px;
+    height: 140px;
+    margin: 5px auto;
+}
+.img-thumbnail {
+    position: relative;
+    width: 180px;
+    height: 120px;
+}
+
+td img {
+    z-index: 1053;
+}
+
+.delIcon {
+    transition: all .3s ease-in-out;
+    text-decoration: none;
+    color: rgb(255, 0, 0);
+    position: absolute;
+    width: 24px;
+    height: 24px;
+    border: solid rgba(20,20,20,.2) 1px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.7);
+    z-index: 1054;
+    margin-left: -15px;
+    margin-top: -8px;
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    opacity: 0;
+}
+
+table a:hover,table a:active,table a:link, table a:focus {
+    color: rgb(152, 0, 29);
+    background: rgba(255,255,255,1);
+    text-decoration: none;
+}
+
+table a:visited {
+    text-decoration: none;
+}

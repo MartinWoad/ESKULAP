@@ -120,8 +120,8 @@
                         <div class="col-xs-12 text-center">
                             <div class="form-group">
                                 <div class="controls">
-                                    <button class="btn btn-success" id="send_button">Zapisz zmiany</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                                    <button class="btn btn-success" id="send_button"><i class="mdi mdi-content-save"></i>Zapisz zmiany</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="mdi mdi-close"></i>Anuluj</button>
                                 </div>
                             </div>
                         </div>
@@ -190,8 +190,8 @@
                         <div class="col-xs-12 text-center">
                             <div class="form-group" >
                                 <div class="controls">
-                                    <button class="btn btn-success" id="send_button">Zapisz zmiany</button>
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+                                    <button class="btn btn-success" id="send_button"><i class="mdi mdi-content-save"></i>Zapisz zmiany</button>
+                                    <button type="button" class="btn btn-default" data-dismiss="modal"><i class="mdi mdi-close"></i>Anuluj</button>
                                 </div>
                             </div>
                         </div>
