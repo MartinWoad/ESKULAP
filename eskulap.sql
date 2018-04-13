@@ -1,4 +1,3 @@
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
 START TRANSACTION;
@@ -72,6 +71,7 @@ CREATE TABLE `users` (
   `pesel` text NOT NULL,
   `data_ur` date NOT NULL,
   `funkcja` text NOT NULL,
+  `lastLogin` text NOT NULL,
   `adres_ip` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -79,8 +79,8 @@ CREATE TABLE `users` (
 -- Zrzut danych tabeli `users`
 --
 
-INSERT INTO `users` (`id`, `login`, `haslo`, `imie`, `nazwisko`, `pesel`, `data_ur`, `funkcja`, `adres_ip`) VALUES
-(1, 'admin', 'admin', 'admin', 'admin', 'admin', '2000-01-01', 'admin', 'admin');
+INSERT INTO `users` (`id`, `login`, `haslo`, `imie`, `nazwisko`, `pesel`, `data_ur`, `funkcja`, `lastLogin`, `adres_ip`) VALUES
+(1, 'admin', '$2y$10$l3AI3lUwbkyA8VjqCUZDNeE0pZcdUxstjDo0sHwkTt7mzZdOttYlG', 'admin', 'admin', '90010179214', '1990-01-01', 'admin', '13.04 19:11:55', '127.0.0.1');
 
 --
 -- Indeksy dla zrzutów tabel
@@ -118,22 +118,22 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT dla tabeli `coloured`
 --
 ALTER TABLE `coloured`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT dla tabeli `patients`
 --
 ALTER TABLE `patients`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT dla tabeli `photos`
 --
 ALTER TABLE `photos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;COMMIT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
