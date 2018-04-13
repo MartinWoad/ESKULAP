@@ -143,6 +143,7 @@ class AdminController extends Controller
                 'pesel' => $pesel,
                 'data_ur' => $data_urodzenia,
                 'funkcja' => $funkcja,
+                'lastLogin' => "0",
                 'adres_ip' => "127.0.0.1"
                 ]);
 
