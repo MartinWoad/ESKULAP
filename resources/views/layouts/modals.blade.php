@@ -51,7 +51,6 @@
 
     </script>   
 
-
 <div id="editUser" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
@@ -79,20 +78,20 @@
                                 <div class="form-group">
                                     <label class="col-form-label" for="forename">Imię</label>
                                     <div class="controls">
-                                        <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                                        <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label" for="surname">Nazwisko</label>
                                     <div class="controls">
-                                        <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                                        <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">
                                     </div>
                                 </div>
 
                                 <div class="form-group">
                                     <label class="col-form-label" for="dateOfBirth">Data urodzenia</label>
                                     <div class="controls">
-                                        <input type="date" name="dateOfBirth" placeholder="" class="form-control" id="dateOfBirth">
+                                        <input required type="date" min="1910-01-01" max="{{ date('Y-m-d') }}" name="dateOfBirth" placeholder="" class="form-control" id="dateOfBirth">
                                     </div>
                                 </div>
                             </div>
@@ -100,19 +99,19 @@
                                 <div class="form-group">
                                     <label class="col-form-label" for="pesel">PESEL</label>
                                     <div class="controls">
-                                        <input type="text" name="pesel" placeholder="" id="pesel" class="form-control">
+                                        <input required pattern="[0-9]+" type="text" name="pesel" placeholder="" id="pesel" minlength="11" title="Proszę wprowadzić poprawny numer PESEL" maxlength="11" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label" for="username">Login</label>
                                     <div class="controls">
-                                        <input type="text" name="login" placeholder="" class="form-control" id="login">
+                                        <input required type="text" id="login" pattern="[A-Za-z0-9]+" minlength="5" maxlength="16" name="username" placeholder="" class="form-control" id="login">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label" for="password">Hasło</label>
                                     <div class="controls">
-                                        <input type="password" id="password" name="password" placeholder="" class="form-control">
+                                        <input required  type="password" minlength="5" maxlength="16" id="password" name="password" placeholder="" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -134,6 +133,9 @@
 
 
 
+@php
+    $lekarze = DB::table('users')->where('funkcja', "lekarz")->get();
+@endphp
 <div id="editPatient" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
@@ -155,26 +157,26 @@
                                 <div class="form-group">
                                     <label class="col-form-label"  for="forename">Imię</label>
                                     <div class="controls">
-                                        <input type="text" name="forename" id="forename" placeholder="" class="form-control">
+                                        <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label" for="surname">Nazwisko</label>
                                     <div class="controls">
-                                        <input type="text" name="surname" id="surname" placeholder="" class="form-control">
+                                        <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label" for="dateOfBirth">Data urodzenia</label>
                                     <div class="controls">
-                                        <input type="date" name="dateOfBirth" placeholder="" class="form-control">
+                                        <input required type="date" min="1910-01-01" max="{{ date('Y-m-d') }}" name="dateOfBirth" placeholder="" class="form-control" id="dateOfBirth">
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="gender">Płeć</label>
-                                    <select class="form-control" name="gender" id="gender">
+                                    <select required class="form-control" name="gender" id="gender">
                                         <option value="Kobieta">Kobieta</option>
                                         <option value="Mężczyzna">Mężczyzna</option>
                                     </select>
@@ -182,8 +184,19 @@
                                 <div class="form-group">
                                     <label class="col-form-label"  for="pesel">PESEL</label>
                                     <div class="controls">
-                                        <input type="text" name="pesel" placeholder="" class="form-control">
+                                        <input required pattern="[0-9]+" type="text" name="pesel" placeholder="" id="pesel" minlength="11" title="Proszę wprowadzić poprawny numer PESEL" maxlength="11" class="form-control">
                                     </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-4 col-form-label" for="patientsDoctor">Lekarz</label>
+                                        <select class="form-control" name="patientsDoctor" id="patientsDoctor">
+                                        @if(sizeof($lekarze) == 0)
+                                          <option value="none">Brak lekarzy</option>
+                                        @endif
+                                        @foreach($lekarze as $lekarz)
+                                          <option value="{{ $lekarz->id }}">{{ $lekarz->imie }} {{ $lekarz->nazwisko }}</option>
+                                        @endforeach
+                                        </select>
                                 </div>
                             </div>
                         </div>

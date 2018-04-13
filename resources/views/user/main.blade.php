@@ -97,10 +97,10 @@ Zarządzanie
                     <div class="d-flex justify-content-between align-items-center">
                         <div class="d-inline-block pt-3">
                             <div class="d-flex">
-                                <h2 class="mb-0 display-4">{{ date('d.m') }}</h2>
+                                <h2 class="mb-0 display-4">{{ explode(" ",DB::table('users')->where("id", $id)->first()->lastLogin)[0] }}</h2>
                                 <div class="d-flex align-items-center ml-2 pt-2">
                                     <i class="mdi mdi-clock text-muted"></i>
-                                    <small class=" ml-1 mb-0">{{ date('H:i:s') }}</small>
+                                    <small class=" ml-1 mb-0">{{ explode(" ",DB::table('users')->where("id", $id)->first()->lastLogin)[1] }}</small>
                                 </div>
                             </div>
                         </div>

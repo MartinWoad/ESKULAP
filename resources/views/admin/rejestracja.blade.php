@@ -21,7 +21,7 @@
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">Rejestracja nowego użytkownika</h4>
-        <form class="form" role="form" action='rejestracja' method="POST" enctype="multipart/form-data">
+        <form class="form" role="form" action='' method="POST" enctype="multipart/form-data">
           <fieldset>
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
             <p class="card-description pl-4">
@@ -33,7 +33,7 @@
                   <label class="col-sm-4 col-form-label" for="funkcja">Funkcja</label>
                   <div class="col-sm-8">
                     <select class="form-control" name="funkcja" id="funkcja" onchange="yesnoCheck(this);">
-                      <option value="lekarz">Lekarz</option>
+                      <option value="lekarz" selected="selected">Lekarz</option>
                       <option value="ordynator">Ordynator</option>
                       <option value="pacjent">Pacjent</option>
                     </select>
@@ -49,13 +49,13 @@
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label" for="forename">Imię</label>
                   <div class="col-sm-8">
-                    <input required pattern="[A-Za-z]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
+                    <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label" for="surname">Nazwisko</label>
                   <div class="col-sm-8">
-                    <input required pattern="[A-Za-z]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">
+                    <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">
                   </div>
                 </div>
                 <div class="form-group row">
@@ -79,8 +79,8 @@
                     @if(sizeof($lekarze) == 0)
                       <option value="none">Brak lekarzy</option>
                     @endif
-                    @foreach($lekarze as $test)
-                      <option value="{{ $test->id }}">{{ $test->imie }} {{ $test->nazwisko }}</option>
+                    @foreach($lekarze as $lekarz)
+                      <option value="{{ $lekarz->id }}">{{ $lekarz->imie }} {{ $lekarz->nazwisko }}</option>
                       @endforeach
                       </select>
                   </div>
@@ -88,7 +88,7 @@
                 <div class="form-group row" id="gdyPacjent1" style="display: none;">
                   <label class="col-sm-4 col-form-label" for="gender">Płeć</label>
                   <div class="col-sm-8">
-                    <select required class="form-control " name="gender" id="gender">
+                    <select class="form-control " name="gender" id="gender">
                       <option value="Kobieta">Kobieta</option>
                       <option value="Mężczyzna">Mężczyzna</option>
                     </select>
@@ -96,7 +96,7 @@
                 </div>
                 <div class="form-group row" id="gdyPacjent5" style="display: none;">
                   <label class="col-sm-4 col-form-label">Zdjęcie RTG</label>
-                  <input required type="file" id="image" name="image" class="file-upload-default">
+                  <input type="file" id="image" name="image" class="file-upload-default">
                   <div class="input-group col-sm-8">
                     <input type="text" class="form-control file-upload-info" disabled="" placeholder="Zamieść zdjęcie rentgenowskie">
                     <span class="input-group-append">
@@ -126,7 +126,7 @@
               </div>
             </div>
             <div class="row mt-4 justify-content-md-center">
-              <button type="submit" class="btn btn-success mr-2"><i class="mdi mdi-account-plus"></i>Zarejestruj pacjenta</button>
+              <button type="submit" class="btn btn-success mr-2"><i class="mdi mdi-account-plus"></i>Zarejestruj użytkownika</button>
               <button type="reset" value="Reset" name="reset" class="btn btn-light"><i class="mdi mdi-undo"></i>Wyczyść formularz</button>
             </div>
           </fieldset>

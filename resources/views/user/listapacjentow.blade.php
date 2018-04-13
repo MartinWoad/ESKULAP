@@ -11,9 +11,8 @@ Zarządzanie
     <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.min.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.min.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/sum().js") }}"></script>
-    <?php
-        require_once('..\resources\views\layouts\modals.blade.php');
-    ?>
+  
+    @include('layouts.modals')
 @endsection
 
 
@@ -125,7 +124,32 @@ Zarządzanie
 
     <script>
     $(document).ready(function() {
-        var patientsTable   = $('#patients').DataTable();
+        var patientsTable   = $('#patients').DataTable( {
+            "language": {
+                "decimal":        "",
+                "emptyTable":     "Brak danych w tabeli",
+                "info":           "Strona _PAGE_ z _PAGES_",
+                "infoEmpty":      "Brak pacjentów do wyświetlenia.",
+                "infoFiltered":   "(odfiltrowane z _MAX_ wyników)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Ilość pacjentów na stronie   _MENU_",
+                "loadingRecords": "Ładuję...",
+                "processing":     "Przetwarzanie...",
+                "search":         "Wyszukaj:",
+                "zeroRecords":    "Brak wyników odpowiadających Twoim kryteriom",
+                "paginate": {
+                    "first":      "Pierwsza",
+                    "last":       "Ostatnia",
+                    "next":       "Następna",
+                    "previous":   "Poprzednia"
+                },
+                "aria": {
+                    "sortAscending":  ": posortuj tabelę rosnąco",
+                    "sortDescending": ": posortuj tabelę malejąco"
+                }
+            }
+        } );
     });
     </script>
 @endsection

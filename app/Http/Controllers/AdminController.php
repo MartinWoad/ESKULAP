@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use DOMDocument;
 use DOMXPath;
@@ -99,15 +100,24 @@ class AdminController extends Controller
 			return redirect()->back()->with('error', 'Błędny numer PESEL.');
 		}
 
-		//Porównanie PESELU z datą urodzenia
+		//Porównanie PESELU z datą urodzenia (zaimplementowane sprawdzanie dla daty > 2000)
 		$dzien   = substr($pesel, 4, 2);
 		$miesiac = substr($pesel, 2, 2);
 		$rok     = substr($pesel, 0, 2);
 
-		if(substr($data_urodzenia, 8, 2) != $dzien || substr($data_urodzenia, 5, 2) != $miesiac || substr($data_urodzenia, 2, 2) != $rok)
+		$dataUrodzeniaDzien = substr($data_urodzenia, 8, 2);
+		$dataUrodzeniaMiesiac = substr($data_urodzenia, 5, 2);
+		$dataUrodzeniaRok = substr($data_urodzenia, 2, 2);
+		if($miesiac > 12) // Jeżeli jest to rocznik >= 2000 (dodajemy do miesiąca 20)
 		{
-			return redirect()->back()->with('error', 'Wprowadzona data nie zgadza się z numerem PESEL.');
+			$dataUrodzeniaMiesiac += 20;
+		} 
+
+		if($dataUrodzeniaDzien != $dzien || $dataUrodzeniaMiesiac != $miesiac || $dataUrodzeniaRok != $rok)
+		{
+			return redirect()->back()->with('error', 'Numer PESEL nie odpowiada wprowadzonym danym.');
 		}
+		
 
 		switch($funkcja)
 		{
@@ -121,17 +131,15 @@ class AdminController extends Controller
 				{
 					return redirect()->back()->with('error', 'Błędny login lub hasło.');
 				}
-
 				// Póki co
 				$ip = "127.0.0.1";
-
+				$hashed = HASH::make($haslo);
 				DB::table('users')->insert(
                 [
                 'login' => $login, 
-                'haslo' => $haslo,
+                'haslo' => $hashed,
                 'imie' => $imie,
                 'nazwisko' => $nazwisko,
-                'haslo' => $haslo,
                 'pesel' => $pesel,
                 'data_ur' => $data_urodzenia,
                 'funkcja' => $funkcja,
@@ -143,6 +151,13 @@ class AdminController extends Controller
 				$plec 			= $request->input('gender');
 				$id_lekarza     = $request->input('patientsDoctor');
 				$file 			= $request->file('image');
+
+
+				$PESELplec = substr($pesel, 9, 1);
+				if(($PESELplec % 2 == 1 && $plec == "Kobieta") || ($PESELplec % 2 == 0) && $plec == "Mężczyzna" )
+				{
+					return redirect()->back()->with('error', 'Numer PESEL nie odpowiada wprowadzonym danym.');
+				}
 
 				if(DB::table('users')->where('id', $id_lekarza)->where('funkcja', 'lekarz')->first() == "")
 				{

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 use DOMDocument;
 use DOMXPath;
@@ -68,6 +69,22 @@ class MainController extends Controller
 				if($request->input("funkcja") == "patient")
 				{
 					DB::table('patients')->where('id', $id)->delete();
+
+					if(DB::table('photos')->where('id_pacjenta', $id)->first() != "")
+					{
+						$photos = DB::table('photos')->where('id_pacjenta', $id)->get();
+						foreach($photos as $photo)
+						{
+							if(DB::table('coloured')->where("original_id", $photo->id)->first() != "")
+							{
+								unlink(DB::table('coloured')->where("original_id", $photo->id)->first()->directory);
+								DB::table('coloured')->where("original_id", $photo->id)->delete();
+							}
+							unlink($photo->directory);
+						}
+						DB::table('photos')->where('id_pacjenta', $id)->delete();
+					}
+
 					return redirect()->back()->with('message', 'Pacjent został usunięty.');
 				} else{
 					DB::table('users')->where('id', $id)->delete();
@@ -80,7 +97,76 @@ class MainController extends Controller
 		        $plec 			  = $request->input("gender");
 		        $dataUrodzenia 	  = $request->input("dateOfBirth");
 		        $pesel 		 	  = $request->input("pesel");
-		        
+		        $lekarz			  = $request->input("patientsDoctor");
+
+
+		        if(hasNumbers($imie) || hasNumbers($nazwisko) || strlen($imie) > 16 || strlen($imie) < 3 || strlen($nazwisko) > 16 || strlen($nazwisko) < 3)
+				{
+					return redirect()->back()->with('error', 'Błąd w imieniu lub nazwisku.');
+				}
+
+				// Sprawdzenie wprowadzonej daty
+				$rok 	 = substr($dataUrodzenia, 0, 4);
+				$miesiac = substr($dataUrodzenia, 5, 2);
+				$dzien   = substr($dataUrodzenia, 8, 2);
+				if(substr($dataUrodzenia, 4,1) != "-" || $rok < 1910 || $rok > date("Y") || $miesiac > 12 || $dzien > 31 || $dzien < 1 || $miesiac < 1)
+				{
+					return redirect()->back()->with('error', 'Błędna data.');
+				}
+
+				//Sprawdzenie numeru PESEL
+				if(!CheckPESEL($pesel) || strlen($pesel ) != 11 || hasLetters($pesel))
+				{
+					return redirect()->back()->with('error', 'Błędny numer PESEL.');
+				}
+
+				$dzien   = substr($pesel, 4, 2);
+				$miesiac = substr($pesel, 2, 2);
+				$rok     = substr($pesel, 0, 2);
+
+				$dataUrodzeniaDzien = substr($dataUrodzenia, 8, 2);
+				$dataUrodzeniaMiesiac = substr($dataUrodzenia, 5, 2);
+				$dataUrodzeniaRok = substr($dataUrodzenia, 2, 2);
+				if($miesiac > 12) // Jeżeli jest to rocznik >= 2000 (dodajemy do miesiąca 20)
+				{
+					$dataUrodzeniaMiesiac += 20;
+				}
+
+				if($dataUrodzeniaDzien != $dzien || $dataUrodzeniaMiesiac != $miesiac || $dataUrodzeniaRok != $rok)
+				{
+					return redirect()->back()->with('error', 'Numer PESEL nie odpowiada wprowadzonym danym.');
+				}
+
+				// Sprawdzenie czy płeć zgadza się z PESELem
+				$PESELplec = substr($pesel, 9, 1);
+				if(($PESELplec % 2 == 1 && $plec == "Kobieta") || ($PESELplec % 2 == 0) && $plec == "Mężczyzna" )
+				{
+					return redirect()->back()->with('error', 'Numer PESEL nie odpowiada wprowadzonym danym.');
+				}
+
+				if($lekarz == "none"){
+					$lekarz = "0";
+				}
+		        DB::table('patients')->where('id', $id)->update([
+		        	'imie' => $imie,
+		        	'nazwisko' => $nazwisko,
+		        	'pesel' => $pesel,
+		        	'plec' => $plec,
+		        	'data_ur' => $dataUrodzenia,
+		        	'id_lekarza' => $lekarz
+		        ]);
+
+				return redirect()->back()->with('message', 'Dane pacjenta zostały zaktualizowane.');
+			break;
+			// Only admin can use this function
+			case "editUser":
+				$imie 	 	 	  = $request->input("forename");
+		        $nazwisko	 	  = $request->input("surname");
+		        $dataUrodzenia 	  = $request->input("dateOfBirth");
+		        $pesel 		 	  = $request->input("pesel");
+		        $login 		 	  = $request->input("login");
+		        $password 		  = $request->input("password");
+		        $funkcja 		  = $request->input("funkcja");
 
 		        if(hasNumbers($imie) || hasNumbers($nazwisko) || strlen($imie) > 16 || strlen($imie) < 3 || strlen($nazwisko) > 16 || strlen($nazwisko) < 3)
 				{
@@ -111,55 +197,6 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Wprowadzona data nie zgadza się z numerem PESEL.');
 				}
 
-		        DB::table('patients')->where('id', $id)->update([
-		        	'imie' => $imie,
-		        	'nazwisko' => $nazwisko,
-		        	'pesel' => $pesel,
-		        	'plec' => $plec,
-		        	'data_ur' => $dataUrodzenia,
-		        ]);
-
-				return redirect()->back()->with('message', 'Dane pacjenta zostały zaktualizowane.');
-			break;
-			// Only admin can use this function
-			case "editUser":
-				$imie 	 	 	  = $request->input("forename");
-		        $nazwisko	 	  = $request->input("surname");
-		        $dataUrodzenia 	  = $request->input("dateOfBirth");
-		        $pesel 		 	  = $request->input("pesel");
-		        $login 		 	  = $request->input("login");
-		        $password 		  = $request->input("password");
-		        $funkcja 		  = $request->input("funkcja");
-
-		        if(hasNumbers($imie) || hasNumbers($nazwisko) || strlen($imie) > 16 || strlen($imie) < 3 || strlen($nazwisko) > 16 || strlen($nazwisko) < 3)
-				{
-					return redirect()->back()->with('error', 'Błąd w imieniu lub nazwisku.');
-				}
-
-				$rok 	 = substr($data_urodzenia, 0, 4);
-				$miesiac = substr($data_urodzenia, 5, 2);
-				$dzien   = substr($data_urodzenia, 8, 2);
-				if(substr($data_urodzenia, 4,1) != "-" || $rok < 1910 || $rok > date("Y") || $miesiac > 12 || $dzien > 31 || $dzien < 1 || $miesiac < 1)
-				{
-					return redirect()->back()->with('error', 'Błędna data.');
-				}
-
-				//Sprawdzenie numeru PESEL
-				if(!CheckPESEL($pesel) || strlen($pesel ) != 11 || hasLetters($pesel))
-				{
-					return redirect()->back()->with('error', 'Błędny numer PESEL.');
-				}
-
-				//Porównanie PESELU z datą urodzenia
-				$dzien   = substr($pesel, 4, 2);
-				$miesiac = substr($pesel, 2, 2);
-				$rok     = substr($pesel, 0, 2);
-
-				if(substr($data_urodzenia, 8, 2) != $dzien || substr($data_urodzenia, 5, 2) != $miesiac || substr($data_urodzenia, 2, 2) != $rok)
-				{
-					return redirect()->back()->with('error', 'Wprowadzona data nie zgadza się z numerem PESEL.');
-				}
-
 				if(strlen($login) > 16 || strlen($login) < 5 || strlen($haslo) > 16 || strlen($haslo) < 5)
 				{
 					return redirect()->back()->with('error', 'Błędny login lub hasło.');
@@ -170,9 +207,10 @@ class MainController extends Controller
 		        	$password = DB::table('users')->where('id', $id)->first()->haslo;
 		    	}
 
+		    	$hashed = HASH::make($password);
 		        DB::table('users')->where('id', $id)->update([
 		        	'login' => $login,
-		        	'haslo' => $password,
+		        	'haslo' => $hashed,
  		        	'imie' => $imie,
 		        	'nazwisko' => $nazwisko,
 		        	'pesel' => $pesel,
@@ -185,12 +223,22 @@ class MainController extends Controller
 			case "addPhoto":
 				$file 			= $request->file('image');
 				$idPacjenta     = $request->input('id');
-				if($file == null)
+				// if($file == null)
+				// {
+				// 	 return redirect()->back()->with('error', 'Proszę wybrać zdjęcie do dodania.')->with("photoModal", $idPacjenta);
+				// }
+				if($file->getClientOriginalExtension() != "png")
 				{
-					 return redirect()->back()->with('error', 'Proszę wybrać zdjęcie do dodania.')->with("photoModal", $idPacjenta);
+					return redirect()->back()->with('error', 'Wybrano niepoprawne rozszerzenie pliku! Dozwolone jest jedynie PNG.')->with("photoModal", $idPacjenta);
 				}
 				$destinationPath = 'pictures/original';
+				$fileName = "";
+				if(DB::table('photos')->first() == "")
+				{
+					$fileName = "1".$file->getClientOriginalName();
+				} else {
 			    $fileName = (DB::table('photos')->orderBy('id', 'desc')->first()->id+1).$file->getClientOriginalName();
+				}
 			    $file->move($destinationPath,$fileName);
 
 			    DB::table('photos')->insert(
@@ -364,12 +412,15 @@ class MainController extends Controller
 
 				if($notColoured == 1)
 				{
+					unlink(DB::table('photos')->where('id', $id)->first()->directory);
 					DB::table('photos')->where('id', $id)->delete();
 					if(DB::table('coloured')->where('original_id', $id)->first() != "")
 					{
+						unlink(DB::table('coloured')->where('original_id', $id)->first()->directory);
 						DB::table('coloured')->where('original_id', $id)->delete();
 					}
 				} else {
+					unlink(DB::table('coloured')->where('id', $id)->first()->directory);
 					DB::table('coloured')->where('id', $id)->delete();
 				}
 
@@ -385,11 +436,15 @@ class MainController extends Controller
 		$login = DB::table('users')->where('login', $request->input("username"))->first();
 		if($login != "")
 		{
-			if($request->input("password") == $login->haslo)
+			if(Hash::check($request->input("password"), $login->haslo))
 			{
+				DB::table('users')->where('login', $request->input("username"))->update([
+		        	'lastLogin' => date("d.m G:i:s")  
+		        ]);
 				if($login->funkcja == "admin")
 				{
 					Session::put('admin', 'true');
+					Session::put('adminid', $login->id);
 					return redirect("/admin");
 				} else
 				{

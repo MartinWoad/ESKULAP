@@ -9,9 +9,9 @@ Zarządzanie
     <!-- DataTables Plugin  -->
     <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.min.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/sum().js") }}"></script>
-    <?php
-        require_once('..\resources\views\layouts\modals.blade.php');
-    ?>
+    
+    @include('layouts.modals')
+
 @endsection
 
 @section('content')

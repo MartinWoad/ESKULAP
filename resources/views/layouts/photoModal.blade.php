@@ -8,7 +8,16 @@
 
 @php
     $zdjecia = DB::table('photos')->where('id_pacjenta', $id)->get();
+    $ord = false;
+    if(isset($ordynator))
+    {
+        if($ordynator)
+        {
+            $ord = true;
+        }
+    }
 @endphp
+
 <div id="getPhotos" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
         <div class="modal-content col-12">
@@ -109,7 +118,9 @@
                                             <input type="hidden" name="coloured" value="{{ $zdjecie->oryginal }}">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <input type="hidden" name="action" value="colorPhoto">
-                                            <button type="submit" class="btn btn-light"><i class="mdi mdi-format-color-fill"></i>Pokoloruj</button>
+                                            
+                                            <button @if($ord) disabled @endif type="submit" class="btn btn-light"><i class="mdi mdi-format-color-fill"></i>Pokoloruj</button>
+                                            
                                     </form>
                                     
                                 </td>

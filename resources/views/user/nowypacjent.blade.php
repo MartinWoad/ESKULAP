@@ -38,7 +38,7 @@ Rejestracja
                         <input type="hidden" name="_token" value="{{ csrf_token() }}">
                         <input type="hidden" name="patientsDoctor" value="{{ $profil->id }}">
                         <input type="hidden" name="funkcja" value="pacjent">
-                        @if($ordynator != true)
+                        @if($ordynator == true)
                             @php
                                 $lekarze = DB::table('users')->where('funkcja', 'lekarz')->get();
                             @endphp
@@ -71,7 +71,7 @@ Rejestracja
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label" for="forename">Imię</label>
                                     <div class="col-sm-8">
-                                        <input required pattern="[A-Za-z]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
+                                        <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
                                     </div>
                                 </div>
                             </div>
@@ -79,7 +79,7 @@ Rejestracja
                                 <div class="form-group row">
                                     <label class="col-sm-4 col-form-label">Nazwisko</label>
                                     <div class="col-sm-8">
-                                        <input required pattern="[A-Za-z]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">                                    </div>
+                                        <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">                                    </div>
                                 </div>
                             </div>
                         </div>
