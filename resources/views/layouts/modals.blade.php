@@ -26,6 +26,7 @@
         var dataUrodzenia = $(element).data('data');
         var pesel = $(element).data('pesel');
         var login = $(element).data('login');
+        var haslo = $(element).data('password');
         var token = $(element).data('token');
         var funkcja = $(element).data('funkcja');
         $("#editUser [name='id']").first().val( id );
@@ -105,13 +106,13 @@
                                 <div class="form-group">
                                     <label class="col-form-label" for="username">Login</label>
                                     <div class="controls">
-                                        <input required type="text" id="login" pattern="[A-Za-z0-9]+" minlength="5" maxlength="16" name="username" placeholder="" class="form-control" id="login">
+                                        <input required type="text" name="login" id="login" pattern="[A-Za-z0-9]+" minlength="5" maxlength="16" name="username" placeholder="" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="col-form-label" for="password">Hasło</label>
                                     <div class="controls">
-                                        <input required  type="password" minlength="5" maxlength="16" id="password" name="password" placeholder="" class="form-control">
+                                        <input   type="password" minlength="5" maxlength="16" id="password" name="password" placeholder="" class="form-control">
                                     </div>
                                 </div>
                             </div>

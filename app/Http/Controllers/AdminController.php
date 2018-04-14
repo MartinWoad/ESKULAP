@@ -170,6 +170,11 @@ class AdminController extends Controller
 					return redirect()->back()->with('error', "Błąd pliku.");
 				}
 
+				if($file->getClientOriginalExtension() != "png" && $file->getClientOriginalExtension() != "jpg")
+				{
+					return redirect()->back()->with('error', 'Wybrano niepoprawne rozszerzenie pliku! Dozwolone jest PNG lub JPG.');
+				}
+
 				if($file->getSize() > 10000000)
 				{
 					return redirect()->back()->with('error', "Wybrany plik jest zbyt duży.");

@@ -57,7 +57,7 @@ Zarządzanie
                                     <td class="text-center">{{  $pracownik->funkcja }}</td>
                                     <td class="text-center">
                                         <div class="btn-group btn-group">
-                                            <button type="button" data-token="{{ csrf_token() }}" data-funkcja="{{ $pracownik->funkcja }}" data-id="{{ $pracownik->id }}" data-imie="{{ $pracownik->imie }}" data-nazwisko="{{ $pracownik->nazwisko }}" data-data="{{ $pracownik->data_ur }}" data-pesel="{{ $pracownik->pesel }}" data-login="{{ $pracownik->login }}" class="btn btn-info" data-toggle="modal" onclick="setUser(this);"  data-target="#editUser"><i class="mdi mdi-account-edit"></i>Edytuj</button>
+                                            <button type="button" data-token="{{ csrf_token() }}" data-funkcja="{{ $pracownik->funkcja }}" data-id="{{ $pracownik->id }}" data-imie="{{ $pracownik->imie }}" data-nazwisko="{{ $pracownik->nazwisko }}" data-data="{{ $pracownik->data_ur }}" data-pesel="{{ $pracownik->pesel }}" data-login="{{ $pracownik->login }}"  class="btn btn-info" data-toggle="modal" onclick="setUser(this);"  data-target="#editUser"><i class="mdi mdi-account-edit"></i>Edytuj</button>
                                             <button name="delete" data-funkcja="{{ $pracownik->funkcja }}" data-token="{{ csrf_token() }}" data-id="{{ $pracownik->id }}" class="btn btn-danger" onclick="setDeleteUser(this);" data-toggle="modal" data-target="#deleteUser"><i class="mdi mdi-delete"></i>Usuń z bazy</button>
                                         </div>
                                     </td>

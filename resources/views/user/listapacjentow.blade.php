@@ -42,23 +42,24 @@ Zarządzanie
         @endphp
     @endif
 
-    @if (session()->get('message'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Sukces!</strong> {{ session()->get('message') }}
-        </div>
-    @endif
-    @if (session()->get('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Ups!</strong> {{ session()->get('error') }}
-        </div>
-    @endif
+
 
 
     <div class="col-12 grid-margin">
         <div class="card">
             <div class="card-body">
+                @if (session()->get('message'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Sukces!</strong> {{ session()->get('message') }}
+                    </div>
+                @endif
+                @if (session()->get('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Ups!</strong> {{ session()->get('error') }}
+                    </div>
+                @endif
                 <h4 class="card-title">Lista pacjentów</h4>
                 @if(sizeof($pacjenci) != 0)
                     <table id="patients" class="display" cellspacing="0" width="100%">

@@ -20,7 +20,7 @@
                         </div>
                         <div class="row mt-5">
                             <div class="col-12 text-center mt-xl-2">
-                                <a class="text-white font-weight-medium" href="/">Strona logowania</a>
+                                <a class="text-white font-weight-medium" href="{{ URL::to('/') }}">Strona logowania</a>
                             </div>
                         </div>
                         <div class="row mt-5">

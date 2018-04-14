@@ -16,22 +16,23 @@ Rejestracja
     }
     $profil = DB::table('users')->where('id', $id)->first();
     ?>
-    @if (session()->get('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Ups!</strong> {{ session()->get('error') }}
-        </div>
-    @endif
-    @if (session()->get('success'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-            <strong>Sukces!</strong> {{ session()->get('success') }}
-        </div>
-    @endif
+
 
     <div class="col-12 grid-margin">
         <div class="card">
             <div class="card-body">
+                @if (session()->get('error'))
+                    <div class="alert alert-danger alert-dismissible fade show">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Ups!</strong> {{ session()->get('error') }}
+                    </div>
+                @endif
+                @if (session()->get('success'))
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                        <strong>Sukces!</strong> {{ session()->get('success') }}
+                    </div>
+                @endif
                 <h4 class="card-title">Rejestracja nowego pacjenta</h4>
                 <form class="form" role="form" action='rejestracja' method="POST"  enctype="multipart/form-data">
                     <fieldset>

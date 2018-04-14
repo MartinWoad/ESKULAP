@@ -99,6 +99,11 @@ class MainController extends Controller
 		        $pesel 		 	  = $request->input("pesel");
 		        $lekarz			  = $request->input("patientsDoctor");
 
+		        if(DB::table('users')->where("id", session()->get('user'))->first()->funkcja == "ordynator")
+				{
+					return redirect()->back()->with('error', 'To konto nie ma uprawnień do edycji danych pacjentów.');
+				}
+
 
 		        if(hasNumbers($imie) || hasNumbers($nazwisko) || strlen($imie) > 16 || strlen($imie) < 3 || strlen($nazwisko) > 16 || strlen($nazwisko) < 3)
 				{
@@ -168,6 +173,8 @@ class MainController extends Controller
 		        $password 		  = $request->input("password");
 		        $funkcja 		  = $request->input("funkcja");
 
+
+
 		        if(hasNumbers($imie) || hasNumbers($nazwisko) || strlen($imie) > 16 || strlen($imie) < 3 || strlen($nazwisko) > 16 || strlen($nazwisko) < 3)
 				{
 					return redirect()->back()->with('error', 'Błąd w imieniu lub nazwisku.');
@@ -197,39 +204,48 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Wprowadzona data nie zgadza się z numerem PESEL.');
 				}
 
-				if(strlen($login) > 16 || strlen($login) < 5 || strlen($haslo) > 16 || strlen($haslo) < 5)
+				if(strlen($login) > 16 || strlen($login) < 5)
 				{
 					return redirect()->back()->with('error', 'Błędny login lub hasło.');
 				}
 
-		        if(strlen($password) < 5 || strlen($password) > 16)
-		        {
-		        	$password = DB::table('users')->where('id', $id)->first()->haslo;
-		    	}
+				if(DB::table('users')->where('id', 'not like', $id)->where("login", $login)->first() != "")
+				{
+					return redirect()->back()->with('error', 'Podany login jest już przypisany do innego użytkownika.');
+				}
+		        
 
-		    	$hashed = HASH::make($password);
 		        DB::table('users')->where('id', $id)->update([
 		        	'login' => $login,
-		        	'haslo' => $hashed,
  		        	'imie' => $imie,
 		        	'nazwisko' => $nazwisko,
 		        	'pesel' => $pesel,
 		        	'data_ur' => $dataUrodzenia,
 		        	'funkcja' => $funkcja
 		        ]);
-
+		        if($password != "")
+		        {
+		        	if(strlen($password) < 5 || strlen($password) > 16)
+			        {
+			        	return redirect()->back()->with('error', 'Błędny login lub hasło.');
+			    	}
+		        	 DB::table('users')->where('id', $id)->update([
+		        	'haslo' => HASH::make($password)
+		        	]);
+		        }
 				return redirect()->back()->with('message', 'Dane użytkownika zostały zaktualizowane.');
 			break;
 			case "addPhoto":
 				$file 			= $request->file('image');
 				$idPacjenta     = $request->input('id');
+
 				// if($file == null)
 				// {
 				// 	 return redirect()->back()->with('error', 'Proszę wybrać zdjęcie do dodania.')->with("photoModal", $idPacjenta);
 				// }
-				if($file->getClientOriginalExtension() != "png")
+				if($file->getClientOriginalExtension() != "png" && $file->getClientOriginalExtension() != "jpg")
 				{
-					return redirect()->back()->with('error', 'Wybrano niepoprawne rozszerzenie pliku! Dozwolone jest jedynie PNG.')->with("photoModal", $idPacjenta);
+					return redirect()->back()->with('error', 'Wybrano niepoprawne rozszerzenie pliku! Dozwolone jest PNG lub JPG.')->with("photoModal", $idPacjenta);
 				}
 				$destinationPath = 'pictures/original';
 				$fileName = "";
@@ -252,13 +268,19 @@ class MainController extends Controller
 			    return redirect()->back()->with('message', 'Zdjęcie dodane poprawnie.')->with("photoModal", $idPacjenta);
 			break;
 			case "colorPhoto":
-				// Wykonanie funkcji kolorującej napisanej przez Michała Żebrowskiego
+				// Implementacja funkcji kolorującej napisanej przez Michała Żebrowskiego
 				$idPacjenta       = $request->input("patientId");
 				$notColoured = $request->input('coloured');
 				if($notColoured != 1)
 				{
 					return redirect()->back()->with('error', 'Nastąpił błąd.')->with("photoModal", $idPacjenta);
 				}
+
+				if(DB::table('users')->where("id", session()->get('user'))->first()->funkcja == "ordynator")
+				{
+					return redirect()->back()->with('error', 'To konto nie ma uprawnień do kolorowania zdjęć.')->with("photoModal", $idPacjenta);
+				}
+
 
 				/**
 				 * createImage()	- Tworzy nowy obraz z pliku
@@ -281,103 +303,6 @@ class MainController extends Controller
 					}
 				}
 
-				/**
-				 * colorize()	- funkcja do kolorowania zdjęć
-				 * @param string	$filename		nazwa pliku do pokolorowania
-				 * @param string	$to				nazwa pliku pokolorowanego
-				 * @param string	$paletteName	nazwa palety
-				 */
-				function colorize($filename, $to, $paletteName){
-					if (!file_exists ( $filename )) {
-						exit("Your file doesn't exist ($filename)");
-					}
-					
-					if (!file_exists ( $paletteName )) {
-						exit("Palette doesn't exist ($paletteName)");
-					}
-					
-					if(!($image = createImage($filename))){
-						exit("Sorry, we can not load this picture ($filename)");
-					}
-					
-					if(!($palette = createImage($paletteName))){
-						exit("Sorry, we can not load color palette ($paletteName)");
-					}
-					
-				    $size = getimagesize($filename);
-				    $sizePalette = getimagesize($paletteName);
-				    
-					$width  = $size[0];
-				    $height = $size[1];
-					
-					$widthPalette  = $sizePalette[0];
-				    $heightPalette = $sizePalette[1];
-					
-					// TODO: maxsixe do zapytania na zajeciach
-					if($width <= 0 || $height <= 0){
-						exit("Image is incorrect size ($filename)");
-					}
-					
-					$minWidthPalette = 255;
-					
-					// TODO: maxsixe do zapytania na zajeciach
-					if($widthPalette <= $minWidthPalette || $heightPalette <= 0){
-						exit("Palette is incorrect size ($paletteName)");
-					}
-					
-					$colorMax = 255;
-					$factor = $widthPalette / $colorMax;
-					
-				    for($x=0;$x<$width;$x++)
-				    {
-				        for($y=0;$y<$height;$y++)
-				        {
-				            $rgb = imagecolorat($image, $x, $y);
-				            $r = ($rgb >> 16) & 0xFF;
-				            $g = ($rgb >> 8) & 0xFF;
-				            $b = ($rgb >> 0) & 0xFF;
-							
-							if($r != $g && $r != $b) {
-								exit("The picture is not black and white ($filename)");
-							}
-							
-							$newColor = intval($r * $factor);
-							
-							if($newColor >= $widthPalette) {
-							 	$newColor = $widthPalette - 1;
-							}
-							
-				            $rgbPalette = imagecolorat($palette, $newColor , 0);	
-							
-							imagesetpixel($image, $x, $y, $rgbPalette);	
-				        }
-				    }
-					
-					$preferedExitension = 'bmp';
-					$extension = explode('.', $to);
-					if(end($extension) !== $preferedExitension){
-						exit('We prefer ".bmp" extension ' . "($to)");
-					}
-
-					if (file_exists ( $to )) {
-						exit("Sorry, file already exists ($to)");
-					}
-					
-					// Rozszerzenie do dogadania
-					imagepng($image, $to);
-						
-					// Free up memory
-					imagedestroy($image);
-					imagedestroy($palette);
-				}
-
-				/**
-				 * generateNewFilename()	- funkcja generująca nową nazwe pliku na podstawie starej (orginalnej) nazwy
-				 * @param string $orginalFilename	nazwa pliku orginalnego (czarno-białego)
-				 * @param string $extension			rozszerzenie dla pliku pokolorowanego
-				 * 
-				 * @return wygenerowana nowa nazwa pliku
-				 */
 				function generateNewFilename($orginalFilename, $extension){
 					$exploded = explode('.', $extension);
 					$firstPart = implode('.', explode('.', $orginalFilename, -1));
@@ -386,18 +311,98 @@ class MainController extends Controller
 				}
 
 				// Ustawianie zmiennych
-
-				$orginalFilename = DB::table('photos')->where('id', $id)->first()->directory;
-				$newFilename = generateNewFilename($orginalFilename, '.bmp');
-				$paletteFilename = 'palettes/palette.png';
+				$filename = DB::table('photos')->where('id', $id)->first()->directory;
+				$to = generateNewFilename($filename, '.bmp');
+				$paletteName = 'palettes/palette.png';
 
 				// Kolorowanie zdjęcia
-				colorize($orginalFilename, $newFilename, $paletteFilename);
+				if (!file_exists ( $filename )) {
+					return redirect()->back()->with('error', 'Zdjęcie '.$filename.' nie istnieje.')->with("photoModal", $id);
+				}
 
+				if (!file_exists ( $paletteName )) {
+					return redirect()->back()->with('error', 'Paleta barw '.$paletteName.' nie istnieje.')->with("photoModal", $id);
+				}
+				
+				if(!($image = createImage($filename))){
+					return redirect()->back()->with('error', 'Nie można załadować tego zdjęcia.')->with("photoModal", $id);
+				}
+				
+				if(!($palette = createImage($paletteName))){
+					return redirect()->back()->with('error', 'Nie można załadować tej palety barw.')->with("photoModal", $id);
+				}
+				
+			    $size = getimagesize($filename);
+			    $sizePalette = getimagesize($paletteName);
+			    
+				$width  = $size[0];
+			    $height = $size[1];
+				
+				$widthPalette  = $sizePalette[0];
+			    $heightPalette = $sizePalette[1];
+				
+				// TODO: maxsixe do zapytania na zajeciach
+				if($width <= 0 || $height <= 0){
+					return redirect()->back()->with('error', 'Zdjęcie ma nieprawidłowe wymiary.')->with("photoModal", $id);
+				}
+				
+				$minWidthPalette = 255;
+				
+				// TODO: maxsixe do zapytania na zajeciach
+				if($widthPalette <= $minWidthPalette || $heightPalette <= 0){
+					return redirect()->back()->with('error', 'Paleta barw ma nieprawidłowe wymiary.')->with("photoModal", $id);
+				}
+				
+				$colorMax = 255;
+				$factor = $widthPalette / $colorMax;
+				
+			    for($x=0;$x<$width;$x++)
+			    {
+			        for($y=0;$y<$height;$y++)
+			        {
+			            $rgb = imagecolorat($image, $x, $y);
+			            $r = ($rgb >> 16) & 0xFF;
+			            $g = ($rgb >> 8) & 0xFF;
+			            $b = ($rgb >> 0) & 0xFF;
+						
+						if($r != $g && $r != $b) {
+							return redirect()->back()->with('error', 'Wybrane zdjęcie nie jest czarno-białe.')->with("photoModal", $id);
+						}
+						
+						$newColor = intval($r * $factor);
+						
+						if($newColor >= $widthPalette) {
+						 	$newColor = $widthPalette - 1;
+						}
+						
+			            $rgbPalette = imagecolorat($palette, $newColor , 0);	
+						
+						imagesetpixel($image, $x, $y, $rgbPalette);	
+			        }
+			    }
+				
+				$preferedExitension = 'bmp';
+				$extension = explode('.', $to);
+				if(end($extension) !== $preferedExitension){
+					return redirect()->back()->with('error', 'Nieodpowiednie rozszerzenie pliku wyjściowego '.$to.'.')->with("photoModal", $id);
+				}
+
+				if (file_exists ( $to )) {
+					return redirect()->back()->with('error', 'Istnieje plik to tej samej nazwie '.$to.'.')->with("photoModal", $id);
+				}
+				
+				// Wyjściowo png
+				imagepng($image, $to);
+					
+				// Free up memory
+				imagedestroy($image);
+				imagedestroy($palette);
+
+				
 
 				DB::table('coloured')->insert(
                 [
-                'directory' => $newFilename,
+                'directory' => $to,
                 'date' => date("Y-m-d"),
                 'original_id' => $id
                 ]);
