@@ -21,7 +21,7 @@ Logowanie
                 <div class="row w-100">
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-dark text-left pt-5 pr-5 pl-5">
-                            <img class="mx-auto d-block" src="img/logo.png" alt="logo">
+                            <img class="mx-auto d-block w-100" src="img/logo.png" alt="logo">
                             <form class="pt-5" role="form" method="POST">
                                 <fieldset>
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
