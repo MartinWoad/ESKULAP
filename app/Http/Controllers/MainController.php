@@ -98,10 +98,11 @@ class MainController extends Controller
 		        $dataUrodzenia 	  = $request->input("dateOfBirth");
 		        $pesel 		 	  = $request->input("pesel");
 		        $lekarz			  = $request->input("patientsDoctor");
-
+		        if(Session::has('user')){
 		        if(DB::table('users')->where("id", session()->get('user'))->first()->funkcja == "ordynator")
 				{
 					return redirect()->back()->with('error', 'To konto nie ma uprawnień do edycji danych pacjentów.');
+				}
 				}
 
 
@@ -276,11 +277,12 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Nastąpił błąd.')->with("photoModal", $idPacjenta);
 				}
 
-				if(DB::table('users')->where("id", session()->get('user'))->first()->funkcja == "ordynator")
-				{
-					return redirect()->back()->with('error', 'To konto nie ma uprawnień do kolorowania zdjęć.')->with("photoModal", $idPacjenta);
+				if(Session::has('user')){
+					if(DB::table('users')->where("id", session()->get('user'))->first()->funkcja == "ordynator")
+					{
+						return redirect()->back()->with('error', 'To konto nie ma uprawnień do kolorowania zdjęć.')->with("photoModal", $idPacjenta);
+					}
 				}
-
 
 				/**
 				 * createImage()	- Tworzy nowy obraz z pliku
