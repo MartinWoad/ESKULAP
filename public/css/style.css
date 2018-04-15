@@ -15468,7 +15468,7 @@ dl {
 /* === Landing screens === */
 /* Auth */
 .auth.login-full-bg {
-  background: url("../images/auth/login_1.jpg");
+  background: url("../img/login.jpg");
   background-size: cover; }
 
 .auth.register-full-bg {

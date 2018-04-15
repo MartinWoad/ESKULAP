@@ -25,11 +25,12 @@ td img {
     text-decoration: none;
     color: rgb(255, 0, 0);
     position: absolute;
+    font-size: 16px;
     width: 24px;
     height: 24px;
     border: solid rgba(20,20,20,.2) 1px;
     border-radius: 50%;
-    background: rgba(255,255,255,.7);
+    background: rgba(255,255,255,1);
     z-index: 1054;
     margin-left: -15px;
     margin-top: -8px;
@@ -38,6 +39,7 @@ td img {
     -ms-user-select: none; /* IE10+/Edge */
     user-select: none; /* Standard */
     opacity: 0;
+    cursor: pointer;
 }
 
 table a:hover,table a:active,table a:link, table a:focus {

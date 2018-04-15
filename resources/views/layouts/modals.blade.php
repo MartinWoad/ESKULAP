@@ -61,16 +61,16 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form class="form" role="form" action='funkcje' method="POST">
-                    <fieldset>
+            <form class="form" role="form" action='funkcje' method="POST">
+                <fieldset>
+                    <div class="modal-body">
                         <input type="hidden" name="id" value="">
                         <input type="hidden" name="_token" value="">
                         <input type="hidden" name="action" value="editUser">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="funkcja">Funkcja</label>
+                                    <label class="col-form-label" for="funkcja">Funkcja</label>
                                     <select class="form-control" name="funkcja" id="funkcja">
                                       <option value="lekarz">Lekarz</option>
                                       <option value="ordynator">Ordynator</option>
@@ -117,6 +117,8 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
                         <div class="col-xs-12 text-center">
                             <div class="form-group">
                                 <div class="controls">
@@ -125,9 +127,9 @@
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
-                </form>
-            </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
 </div>
@@ -139,7 +141,6 @@
 @endphp
 <div id="editPatient" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
-
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Edytuj dane pacjenta</h5>
@@ -147,9 +148,9 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form class="form" role="form" action='funkcje' method="POST">
-                    <fieldset>
+            <form class="form" role="form" action='funkcje' method="POST">
+                <fieldset>
+                    <div class="modal-body">
                         <input type="hidden" name="id" value="">
                         <input type="hidden" name="_token" value="">
                         <input type="hidden" name="action" value="editPatient">
@@ -176,7 +177,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label for="gender">Płeć</label>
+                                    <label class="col-form-label" for="gender">Płeć</label>
                                     <select required class="form-control" name="gender" id="gender">
                                         <option value="Kobieta">Kobieta</option>
                                         <option value="Mężczyzna">Mężczyzna</option>
@@ -201,17 +202,19 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class="modal-footer">
                         <div class="col-xs-12 text-center">
-                            <div class="form-group" >
+                            <div class="form-group">
                                 <div class="controls">
                                     <button class="btn btn-success" id="send_button"><i class="mdi mdi-content-save"></i>Zapisz zmiany</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal"><i class="mdi mdi-close"></i>Anuluj</button>
                                 </div>
                             </div>
                         </div>
-                    </fieldset>
-                </form>
-            </div>
+                    </div>
+                </fieldset>
+            </form>
         </div>
     </div>
 </div>
@@ -236,8 +239,8 @@
                             <input type="hidden" name="id" value=""/>
                             <input type="hidden" name="funkcja" value=""/>
                             <input type="hidden" name="action" value="delete"/>
-                            <button type="submit" class="btn btn-danger btn-ok btn-sm">Usuń</button>
-                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal">Anuluj</button>
+                            <button type="submit" class="btn btn-danger btn-ok btn-sm"><i class="mdi mdi-delete"></i>Usuń</button>
+                            <button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="mdi mdi-close"></i>Anuluj</button>
                         </form>
                     </fieldset>
                     </div>

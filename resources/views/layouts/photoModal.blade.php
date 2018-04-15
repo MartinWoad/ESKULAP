@@ -87,7 +87,7 @@
                                         <input type="hidden" name="action" value="deletePhoto">
                                         <img src="{{ $zdjecie->directory }}" class="img-thumbnail">
                                         @if(session()->get('admin') == "true")
-                                        <a class="delIcon"><i class="mdi mdi-close" style="color:red;"></i></a>
+                                        <a class="delIcon"><i class="mdi mdi-close text-danger"></i></a>
                                         <button class="delIcon"></button>
                                         @endif
                             </form>

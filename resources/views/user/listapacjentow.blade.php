@@ -5,13 +5,13 @@ Zarządzanie
 @endsection
 
 @section('head')
-    <link rel="stylesheet" href="{{ URL::to("css/jquery.dataTables.min.css") }}">
+    <link rel="stylesheet" href="{{ URL::to("css/dataTables.bootstrap4.css") }}">
 
     <!-- DataTables Plugin  -->
-    <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.min.js") }}"></script>
-    <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.min.js") }}"></script>
+    <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.js") }}"></script>
+    <script type="text/javascript" src="{{ URL::to("js/dataTables.bootstrap4.js") }}"></script>
+    <script type="text/javascript" src="{{ URL::to("js/data-table.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/sum().js") }}"></script>
-  
     @include('layouts.modals')
 @endsection
 
@@ -62,7 +62,7 @@ Zarządzanie
                 @endif
                 <h4 class="card-title">Lista pacjentów</h4>
                 @if(sizeof($pacjenci) != 0)
-                    <table id="patients" class="display" cellspacing="0" width="100%">
+                    <table id="patients" class="table" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                             <th class="text-center">Imię</th>
