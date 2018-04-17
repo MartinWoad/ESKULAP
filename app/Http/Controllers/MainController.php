@@ -319,19 +319,19 @@ class MainController extends Controller
 
 				// Kolorowanie zdjęcia
 				if (!file_exists ( $filename )) {
-					return redirect()->back()->with('error', 'Zdjęcie '.$filename.' nie istnieje.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Zdjęcie '.$filename.' nie istnieje.')->with("photoModal", $idPacjenta);
 				}
 
 				if (!file_exists ( $paletteName )) {
-					return redirect()->back()->with('error', 'Paleta barw '.$paletteName.' nie istnieje.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Paleta barw '.$paletteName.' nie istnieje.')->with("photoModal", $idPacjenta);
 				}
 				
 				if(!($image = createImage($filename))){
-					return redirect()->back()->with('error', 'Nie można załadować tego zdjęcia.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Nie można załadować tego zdjęcia.')->with("photoModal", $idPacjenta);
 				}
 				
 				if(!($palette = createImage($paletteName))){
-					return redirect()->back()->with('error', 'Nie można załadować tej palety barw.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Nie można załadować tej palety barw.')->with("photoModal", $idPacjenta);
 				}
 				
 			    $size = getimagesize($filename);
@@ -345,14 +345,14 @@ class MainController extends Controller
 				
 				// TODO: maxsixe do zapytania na zajeciach
 				if($width <= 0 || $height <= 0){
-					return redirect()->back()->with('error', 'Zdjęcie ma nieprawidłowe wymiary.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Zdjęcie ma nieprawidłowe wymiary.')->with("photoModal", $idPacjenta);
 				}
 				
 				$minWidthPalette = 255;
 				
 				// TODO: maxsixe do zapytania na zajeciach
 				if($widthPalette <= $minWidthPalette || $heightPalette <= 0){
-					return redirect()->back()->with('error', 'Paleta barw ma nieprawidłowe wymiary.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Paleta barw ma nieprawidłowe wymiary.')->with("photoModal", $idPacjenta);
 				}
 				
 				$colorMax = 255;
@@ -368,7 +368,7 @@ class MainController extends Controller
 			            $b = ($rgb >> 0) & 0xFF;
 						
 						if($r != $g && $r != $b) {
-							return redirect()->back()->with('error', 'Wybrane zdjęcie nie jest czarno-białe.')->with("photoModal", $id);
+							return redirect()->back()->with('error', 'Wybrane zdjęcie nie jest czarno-białe.')->with("photoModal", $idPacjenta);
 						}
 						
 						$newColor = intval($r * $factor);
@@ -386,11 +386,11 @@ class MainController extends Controller
 				$preferedExitension = 'bmp';
 				$extension = explode('.', $to);
 				if(end($extension) !== $preferedExitension){
-					return redirect()->back()->with('error', 'Nieodpowiednie rozszerzenie pliku wyjściowego '.$to.'.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Nieodpowiednie rozszerzenie pliku wyjściowego '.$to.'.')->with("photoModal", $idPacjenta);
 				}
 
 				if (file_exists ( $to )) {
-					return redirect()->back()->with('error', 'Istnieje plik to tej samej nazwie '.$to.'.')->with("photoModal", $id);
+					return redirect()->back()->with('error', 'Istnieje plik to tej samej nazwie '.$to.'.')->with("photoModal", $idPacjenta);
 				}
 				
 				// Wyjściowo png
