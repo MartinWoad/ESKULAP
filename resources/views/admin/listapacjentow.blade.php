@@ -6,12 +6,14 @@ Zarządzanie
 @section('head')
 
     <link rel="stylesheet" href="{{ URL::to("css/dataTables.bootstrap4.css") }}">
-
+    <link rel="stylesheet" href="{{ URL::to("modules/lightbox/dist/css/lightbox.min.css") }}">
     <!-- DataTables Plugin  -->
     <script type="text/javascript" src="{{ URL::to("js/jquery.dataTables.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/dataTables.bootstrap4.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/data-table.js") }}"></script>
     <script type="text/javascript" src="{{ URL::to("js/sum().js") }}"></script>
+    <script type="text/javascript" src="{{ URL::to("modules/lightbox/dist/js/lightbox.min.js") }}"></script>
+
     @include('layouts.modals')
 
 @endsection
