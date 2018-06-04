@@ -1,28 +1,23 @@
 <?php
-/**
-* Implementacja algorytmu kolorującego zdjęcia
-*
-* PHP version 7.2
-*
-* @author     LeoProXXX
-* @version    2.0
-*/
+///Implementacja algorytmu kolorującego zdjęcia
+/// PHP version 7.2
+///@author     LeoProXXX
+/// @version    2.0
 
-/**
-* Klasa służąca do kolorowania zdjęć
-*/
+
+
+/// Klasa służąca do kolorowania zdjęć
+
 class Picture {
 	private $image;
 	private $palette;
 	private $inputFilePath;
 	private $paletteFilePath;
 	
-	/**
-	* Kontruktor
-	*
-	* @param string $filename nazwa pliku do pokolorowania
-	* @param string $paletteName nazwa palety
-	*/
+	 ///Kontruktor
+	/// @param string $filename nazwa pliku do pokolorowania
+	/// @param string $paletteName nazwa palety
+	
 	public function __construct($inputFilePath , $paletteFilePath)
 	{
 		if (!file_exists ( $inputFilePath  )) {
@@ -45,9 +40,9 @@ class Picture {
 		$this->paletteFilePath = $paletteFilePath;
 	}
 	
-	/**
-	* Destruktor zwalniający zasoby
-	*/
+	
+	///Destruktor zwalniający zasoby
+	
     public function __destruct()
 	{ 
 		// Free up memory
@@ -60,13 +55,10 @@ class Picture {
 		}
 	}
 	
-	/**
-	* Metoda tworząca nowy obraz z pliku
-	*
-	* @param string $filePath nazwa pliku
-	* 
-	* @return zwraca obraz lub w przypadu niepowodzenia false;
-	*/
+	
+	/// Metoda tworząca nowy obraz z pliku
+	/// @param string $filePath nazwa pliku
+	/// @return zwraca obraz lub w przypadu niepowodzenia false;
 	private function createImage($filePath){
 		switch (exif_imagetype($filePath)) {
 			case IMAGETYPE_GIF:
@@ -82,9 +74,9 @@ class Picture {
 		}
 	}
 	
-	/**
-	* Metoda kolorująca zdjęcie
-	*/
+	
+	///Metoda kolorująca zdjęcie
+	
 	public function colorize(){	
 		$size = getimagesize($this->inputFilePath );
 		$sizePalette = getimagesize($this->paletteFilePath);
@@ -136,11 +128,10 @@ class Picture {
 		}
 	}
 	
-	/**
-	* Metoda zapisująca pokolorowany obraz do pliku
-	*
-	* @param string $outputFilePath ścieżka do zapisu zdjęcia
-	*/
+	
+	///Metoda zapisująca pokolorowany obraz do pliku
+	/// @param string $outputFilePath ścieżka do zapisu zdjęcia
+	
 	public function save($outputFilePath) {
 		$preferedExitension = 'bmp';
 		$extension = explode('.', $outputFilePath );
@@ -156,14 +147,11 @@ class Picture {
 		imagebmp($this->image, $outputFilePath );
 	}
 	
-	/**
-	* Metoda generująca nową nazwe pliku na podstawie starej (orginalnej) nazwy
-	*
-	* @param string $orginalFilename nazwa pliku orginalnego (czarno-białego)
-	* @param string $extension	 rozszerzenie dla pliku pokolorowanego
-	* 
-	* @return wygenerowana nowa nazwa pliku
-	*/
+	/// Metoda generująca nową nazwe pliku na podstawie starej (orginalnej) nazwy	
+	/// @param string $orginalFilename nazwa pliku orginalnego (czarno-białego)
+	/// @param string $extension	 rozszerzenie dla pliku pokolorowanego
+	/// @return wygenerowana nowa nazwa pliku
+	
 	public function generateNewFilename($orginalFilename, $extension) {
 		$exploded = explode('.', $extension);
 		$firstPart = implode('.', explode('.', $orginalFilename, -1));
