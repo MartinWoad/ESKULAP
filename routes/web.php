@@ -1,7 +1,7 @@
 <?php
 
 
-/*
+/**
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
@@ -11,7 +11,7 @@
 */
 
 
-/*
+/**
 	Panel logowania
 	Wyświetlany: jako strona główna, po zalogowaniu (z uruchomioną sesją) 
 	przejście do tej ścieżki przekieruje użytkownika do panelu zarządzania jego pacjentami.
@@ -27,7 +27,7 @@ Route::post('/funkcje', 'MainController@funkcje');
 
 Route::post('/getPhotos', 'MainController@getPhotos');
 
-/*
+/**
 	Panel administratora
 	Wyświetlany - tylko po zalogowaniu się z wykorzystaniem danych administratora.
 */
@@ -43,7 +43,7 @@ Route::get('/listapracownikow', function(){
 });
 
 
-/*
+/**
 	Panel zarządzania
 	Wyświetlany - tylko po zalogowaniu się z wykorzystaniem danych lekarza, ordynatora lub admina.
 */
@@ -88,7 +88,7 @@ Route::get('/listapacjentow', function(){
 });
 
 
-/*
+/**
 	Wylogowywanie
 */
 Route::get('/logout', 'MainController@wyloguj');
