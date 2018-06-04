@@ -1,5 +1,5 @@
 
-    <!-- Funkcje do obsługi Modali-->
+    ///Funkcje do obsługi Modali
     <script>
 
     function setPatient(element) {
