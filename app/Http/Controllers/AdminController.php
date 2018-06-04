@@ -50,20 +50,20 @@ class AdminController extends Controller
 
 		function CheckPESEL($str)
 		{
-			if (!preg_match('/^[0-9]{11}$/',$str)) //sprawdzamy czy ciąg ma 11 cyfr
+			if (!preg_match('/^[0-9]{11}$/',$str)) ///sprawdzamy czy ciąg ma 11 cyfr
 			{
 				return false;
 			}
 		 
-			$arrSteps = array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3); // tablica z odpowiednimi wagami
+			$arrSteps = array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3); /// tablica z odpowiednimi wagami
 			$intSum = 0;
 			for ($i = 0; $i < 10; $i++)
 			{
-				$intSum += $arrSteps[$i] * $str[$i]; //mnożymy każdy ze znaków przez wagę i sumujemy wszystko
+				$intSum += $arrSteps[$i] * $str[$i]; ///mnożymy każdy ze znaków przez wagę i sumujemy wszystko
 			}
-			$int = 10 - $intSum % 10; //obliczamy sumć kontrolną
+			$int = 10 - $intSum % 10; ///obliczamy sumć kontrolną
 			$intControlNr = ($int == 10)?0:$int;
-			if ($intControlNr == $str[10]) //sprawdzamy czy taka sama suma kontrolna jest w ciągu
+			if ($intControlNr == $str[10]) ///sprawdzamy czy taka sama suma kontrolna jest w ciągu
 			{
 				return true;
 			}
@@ -100,7 +100,7 @@ class AdminController extends Controller
 			return redirect()->back()->with('error', 'Błędny numer PESEL.');
 		}
 
-		//Porównanie PESELU z datą urodzenia (zaimplementowane sprawdzanie dla daty > 2000)
+		///Porównanie PESELU z datą urodzenia (zaimplementowane sprawdzanie dla daty > 2000)
 		$dzien   = substr($pesel, 4, 2);
 		$miesiac = substr($pesel, 2, 2);
 		$rok     = substr($pesel, 0, 2);
@@ -108,7 +108,7 @@ class AdminController extends Controller
 		$dataUrodzeniaDzien = substr($data_urodzenia, 8, 2);
 		$dataUrodzeniaMiesiac = substr($data_urodzenia, 5, 2);
 		$dataUrodzeniaRok = substr($data_urodzenia, 2, 2);
-		if($miesiac > 12) // Jeżeli jest to rocznik >= 2000 (dodajemy do miesiąca 20)
+		if($miesiac > 12) /// Jeżeli jest to rocznik >= 2000 (dodajemy do miesiąca 20)
 		{
 			$dataUrodzeniaMiesiac += 20;
 		} 
@@ -131,7 +131,7 @@ class AdminController extends Controller
 				{
 					return redirect()->back()->with('error', 'Błędny login lub hasło.');
 				}
-				// Póki co
+				
 				$ip = "127.0.0.1";
 				$hashed = HASH::make($haslo);
 				DB::table('users')->insert(
