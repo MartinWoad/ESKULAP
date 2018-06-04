@@ -11,6 +11,7 @@
 */
 
 
+
 /**
 	Panel logowania
 	Wyświetlany: jako strona główna, po zalogowaniu (z uruchomioną sesją) 
