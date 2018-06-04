@@ -95,14 +95,14 @@ class Picture {
 		$widthPalette  = $sizePalette[0];
 		$heightPalette = $sizePalette[1];
 		
-		// TODO: maxsixe do zapytania na zajeciach
+		
 		if($width <= 0 || $height <= 0){
 			exit("Image is incorrect size ($inputFilePath )");
 		}
 		
 		$minWidthPalette = 255;
 		
-		// TODO: maxsixe do zapytania na zajeciach
+		
 		if($widthPalette <= $minWidthPalette || $heightPalette <= 0){
 			exit("Palette is incorrect size ($paletteFilePath)");
 		}
@@ -152,7 +152,7 @@ class Picture {
 			exit("Sorry, file already exists ($outputFilePath )");
 		}
 		
-		// Rozszerzenie do dogadania
+		
 		imagebmp($this->image, $outputFilePath );
 	}
 	
@@ -172,15 +172,15 @@ class Picture {
 	}
 }
 	
-	// Ustawianie zmiennych
+	/// Ustawianie zmiennych
 	$orginal_file_path = 'pictures/test.png';
 	$palette_file_path = 'palettes/palette.png';
 	
-	// Tworzymy instancje no
+	/// Tworzymy instancje no
 	$picture = new Picture($orginal_file_path, $palette_file_path);
-	// Kolorowanie zdjęcia
+	/// Kolorowanie zdjęcia
 	$picture->colorize();
-	// Generowanie nowej nazwy pliku
+	/// Generowanie nowej nazwy pliku
 	$new_file_name = $picture->generateNewFilename($orginal_file_path, '.bmp');
-	// Zapisywanie pokolorowanego pliku
+	/// Zapisywanie pokolorowanego pliku
 	$picture->save($new_file_name);
