@@ -111,7 +111,7 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Błąd w imieniu lub nazwisku.');
 				}
 
-				// Sprawdzenie wprowadzonej daty
+				/// Sprawdzenie wprowadzonej daty
 				$rok 	 = substr($dataUrodzenia, 0, 4);
 				$miesiac = substr($dataUrodzenia, 5, 2);
 				$dzien   = substr($dataUrodzenia, 8, 2);
@@ -120,7 +120,7 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Błędna data.');
 				}
 
-				//Sprawdzenie numeru PESEL
+				/// Sprawdzenie numeru PESEL
 				if(!CheckPESEL($pesel) || strlen($pesel ) != 11 || hasLetters($pesel))
 				{
 					return redirect()->back()->with('error', 'Błędny numer PESEL.');
@@ -189,13 +189,13 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Błędna data.');
 				}
 
-				///Sprawdzenie numeru PESEL
+				/// Sprawdzenie numeru PESEL
 				if(!CheckPESEL($pesel) || strlen($pesel ) != 11 || hasLetters($pesel))
 				{
 					return redirect()->back()->with('error', 'Błędny numer PESEL.');
 				}
 
-				///Porównanie PESELU z datą urodzenia
+				/// Porównanie PESELU z datą urodzenia
 				$dzien   = substr($pesel, 4, 2);
 				$miesiac = substr($pesel, 2, 2);
 				$rok     = substr($pesel, 0, 2);
