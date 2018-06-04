@@ -40,20 +40,20 @@ class MainController extends Controller
 
 		function CheckPESEL($str)
 		{
-			if (!preg_match('/^[0-9]{11}$/',$str)) //sprawdzamy czy ciąg ma 11 cyfr
+			if (!preg_match('/^[0-9]{11}$/',$str)) ///sprawdzamy czy ciąg ma 11 cyfr
 			{
 				return false;
 			}
 		 
-			$arrSteps = array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3); // tablica z odpowiednimi wagami
+			$arrSteps = array(1, 3, 7, 9, 1, 3, 7, 9, 1, 3); /// tablica z odpowiednimi wagami
 			$intSum = 0;
 			for ($i = 0; $i < 10; $i++)
 			{
-				$intSum += $arrSteps[$i] * $str[$i]; //mnożymy każdy ze znaków przez wagę i sumujemy wszystko
+				$intSum += $arrSteps[$i] * $str[$i]; ///mnożymy każdy ze znaków przez wagę i sumujemy wszystko
 			}
-			$int = 10 - $intSum % 10; //obliczamy sumć kontrolną
+			$int = 10 - $intSum % 10; ///obliczamy sumć kontrolną
 			$intControlNr = ($int == 10)?0:$int;
-			if ($intControlNr == $str[10]) //sprawdzamy czy taka sama suma kontrolna jest w ciągu
+			if ($intControlNr == $str[10]) ///sprawdzamy czy taka sama suma kontrolna jest w ciągu
 			{
 				return true;
 			}
@@ -133,7 +133,7 @@ class MainController extends Controller
 				$dataUrodzeniaDzien = substr($dataUrodzenia, 8, 2);
 				$dataUrodzeniaMiesiac = substr($dataUrodzenia, 5, 2);
 				$dataUrodzeniaRok = substr($dataUrodzenia, 2, 2);
-				if($miesiac > 12) // Jeżeli jest to rocznik >= 2000 (dodajemy do miesiąca 20)
+				if($miesiac > 12) /// Jeżeli jest to rocznik >= 2000 (dodajemy do miesiąca 20)
 				{
 					$dataUrodzeniaMiesiac += 20;
 				}
@@ -143,7 +143,7 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Numer PESEL nie odpowiada wprowadzonym danym.');
 				}
 
-				// Sprawdzenie czy płeć zgadza się z PESELem
+				/// Sprawdzenie czy płeć zgadza się z PESELem
 				$PESELplec = substr($pesel, 9, 1);
 				if(($PESELplec % 2 == 1 && $plec == "Kobieta") || ($PESELplec % 2 == 0) && $plec == "Mężczyzna" )
 				{
@@ -164,7 +164,7 @@ class MainController extends Controller
 
 				return redirect()->back()->with('message', 'Dane pacjenta zostały zaktualizowane.');
 			break;
-			// Only admin can use this function
+			/// Tylko admin może użyć tej funkcji
 			case "editUser":
 				$imie 	 	 	  = $request->input("forename");
 		        $nazwisko	 	  = $request->input("surname");
@@ -189,13 +189,13 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Błędna data.');
 				}
 
-				//Sprawdzenie numeru PESEL
+				///Sprawdzenie numeru PESEL
 				if(!CheckPESEL($pesel) || strlen($pesel ) != 11 || hasLetters($pesel))
 				{
 					return redirect()->back()->with('error', 'Błędny numer PESEL.');
 				}
 
-				//Porównanie PESELU z datą urodzenia
+				///Porównanie PESELU z datą urodzenia
 				$dzien   = substr($pesel, 4, 2);
 				$miesiac = substr($pesel, 2, 2);
 				$rok     = substr($pesel, 0, 2);
@@ -240,10 +240,10 @@ class MainController extends Controller
 				$file 			= $request->file('image');
 				$idPacjenta     = $request->input('id');
 
-				// if($file == null)
-				// {
-				// 	 return redirect()->back()->with('error', 'Proszę wybrać zdjęcie do dodania.')->with("photoModal", $idPacjenta);
-				// }
+				/// if($file == null)
+				/// {
+				///	 return redirect()->back()->with('error', 'Proszę wybrać zdjęcie do dodania.')->with("photoModal", $idPacjenta);
+				/// }
 				if($file->getClientOriginalExtension() != "png" && $file->getClientOriginalExtension() != "jpg")
 				{
 					return redirect()->back()->with('error', 'Wybrano niepoprawne rozszerzenie pliku! Dozwolone jest PNG lub JPG.')->with("photoModal", $idPacjenta);
@@ -269,7 +269,7 @@ class MainController extends Controller
 			    return redirect()->back()->with('message', 'Zdjęcie dodane poprawnie.')->with("photoModal", $idPacjenta);
 			break;
 			case "colorPhoto":
-				// Implementacja funkcji kolorującej napisanej przez Michała Żebrowskiego
+				/// Implementacja funkcji kolorującej napisanej przez Michała Żebrowskiego
 				$idPacjenta       = $request->input("patientId");
 				$notColoured = $request->input('coloured');
 				if($notColoured != 1)
@@ -312,12 +312,12 @@ class MainController extends Controller
 					return $firstPart . "_co_" . date("dmY_G.i_") . substr(md5(rand()), 0, 7) . "." . end($exploded);;
 				}
 
-				// Ustawianie zmiennych
+				/// Ustawianie zmiennych
 				$filename = DB::table('photos')->where('id', $id)->first()->directory;
 				$to = generateNewFilename($filename, '.bmp');
 				$paletteName = 'palettes/palette.png';
 
-				// Kolorowanie zdjęcia
+				/// Kolorowanie zdjęcia
 				if (!file_exists ( $filename )) {
 					return redirect()->back()->with('error', 'Zdjęcie '.$filename.' nie istnieje.')->with("photoModal", $idPacjenta);
 				}
@@ -343,14 +343,14 @@ class MainController extends Controller
 				$widthPalette  = $sizePalette[0];
 			    $heightPalette = $sizePalette[1];
 				
-				// TODO: maxsixe do zapytania na zajeciach
+				/// TODO: maxsixe do zapytania na zajeciach
 				if($width <= 0 || $height <= 0){
 					return redirect()->back()->with('error', 'Zdjęcie ma nieprawidłowe wymiary.')->with("photoModal", $idPacjenta);
 				}
 				
 				$minWidthPalette = 255;
 				
-				// TODO: maxsixe do zapytania na zajeciach
+				/// TODO: maxsixe do zapytania na zajeciach
 				if($widthPalette <= $minWidthPalette || $heightPalette <= 0){
 					return redirect()->back()->with('error', 'Paleta barw ma nieprawidłowe wymiary.')->with("photoModal", $idPacjenta);
 				}
@@ -393,10 +393,10 @@ class MainController extends Controller
 					return redirect()->back()->with('error', 'Istnieje plik to tej samej nazwie '.$to.'.')->with("photoModal", $idPacjenta);
 				}
 				
-				// Wyjściowo png
+				/// Wyjściowo png
 				imagepng($image, $to);
 					
-				// Free up memory
+				/// Free up memory
 				imagedestroy($image);
 				imagedestroy($palette);
 
