@@ -164,6 +164,10 @@ class AdminController extends Controller
 				{
 					return redirect()->back()->with('error', 'Błędne id lekarza.');
 				}
+				
+				if ($request->file('image') == null) {
+					return redirect()->back()->with('error', "Brak załączonego zdjęcia RTG.");
+				}
 
 
 				if (!$request->file('image')->isValid()) {
