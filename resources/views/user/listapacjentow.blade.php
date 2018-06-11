@@ -112,7 +112,7 @@ Zarządzanie
                                     <td class="text-center">
                                         <div class="btn-group">
                                             <button type="button" data-token="{{ csrf_token() }}" data-id="{{ $pacjent->id }}" data-imie="{{ $pacjent->imie }}" data-nazwisko="{{ $pacjent->nazwisko }}" data-data="{{ $pacjent->data_ur }}" data-pesel="{{ $pacjent->pesel }}" class="btn btn-info" data-plec="{{ $pacjent->plec }}" data-toggle="modal" onclick="setPatient(this);"  data-target="#editPatient"  @if($ordynator==true) disabled @endif><i class="mdi mdi-account-edit"></i>Edytuj</button>
-                                            <button name="delete" data-funkcja="patient" data-token="{{ csrf_token() }}" data-id="{{ $pacjent->id }}" class="btn btn-danger" onclick="setDeleteUser(this);" data-toggle="modal" data-target="#deleteUser"><i class="mdi mdi-delete"></i>Usuń z bazy</button>
+                                            <button name="delete" data-funkcja="patient" data-token="{{ csrf_token() }}" data-id="{{ $pacjent->id }}" class="btn btn-danger" onclick="setDeleteUser(this);" data-toggle="modal" data-target="#deleteUser" @if($ordynator==true) disabled @endif><i class="mdi mdi-delete"></i>Usuń z bazy</button>
                                          </div>
                                     </td>
                                 </tr>

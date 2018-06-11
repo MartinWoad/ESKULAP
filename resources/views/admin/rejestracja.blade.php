@@ -50,19 +50,19 @@
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label" for="forename">Imię</label>
                   <div class="col-sm-8">
-                    <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
+                    <input required pattern="[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ]+" minlength="3" type="text" name="forename" id="forename" placeholder="" maxlength="16" class="form-control">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label" for="surname">Nazwisko</label>
                   <div class="col-sm-8">
-                    <input required pattern="[A-Za-ząćęłńóśźż]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">
+                    <input required pattern="[A-Za-ząćęłńóśźżĄĆĘŁŃÓŚŹŻ-]+" minlength="3" type="text" name="surname" id="surname" placeholder="" maxlength="16" class="form-control">
                   </div>
                 </div>
                 <div class="form-group row">
                   <label class="col-sm-4 col-form-label" for="dateOfBirth">Data urodzenia</label>
                   <div class="col-sm-8">
-                    <input required type="date" min="1910-01-01" max="{{ date('Y-m-d') }}" name="dateOfBirth" placeholder="" class="form-control" id="dateOfBirth">
+                    <input required min="1910-01-01" max="{{ date('Y-m-d') }}" name="dateOfBirth" placeholder="rrrr-mm-dd" type="text" onfocus="(this.type='date')" onchange="this.blur();" class="form-control" id="dateOfBirth">
                   </div>
                 </div>
                 <div class="form-group row">
