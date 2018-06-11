@@ -24,7 +24,7 @@
                 <div class="content-wrapper full-page-wrapper d-flex align-items-center text-center error-page bg-dark">
                     <div class="col-lg-7 mx-auto text-white">
                         <div class="row align-items-center d-flex flex-row">
-                            <img class="mx-auto" src="img/logo.png" alt="logo">
+                            <img class="mx-auto" src="/public/img/logo.png" alt="logo">
                         </div>
                         <div class="row align-items-center d-flex flex-row">
                             <div class="col-lg-6 text-lg-right pr-lg-4">
